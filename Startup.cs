@@ -1,5 +1,6 @@
 //using ESOCompanion.Data;
 using DataAccessLibrary;
+using DataAccessLibrary.Services;
 using DataAccessLibrary.SQLite;
 using ESOCompanion.Data;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +34,7 @@ namespace ESOCompanion
             services.AddTransient<IUserData, UserData>();
             services.AddTransient<ESOScraper.Scraper>();
             services.AddTransient<AppData>();
+            services.AddTransient<AccountManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

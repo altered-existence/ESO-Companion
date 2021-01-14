@@ -15,7 +15,6 @@ namespace ESOCompanion.Data
         public List<CharacterModel> usersCharacters { get; set; }
         public CharacterModel loadedCharacter { get; set; }
         public List<StyleModel> loadedCharacterStyles { get; set; }
-        private string loadedUserConnectionString { get; set; }
         public bool isAdminLoggedIn { get; set; }
         public bool isRegistered { get; set; }
         public bool isLoggedIn { get; set; }
@@ -43,14 +42,6 @@ namespace ESOCompanion.Data
             loadedCharacterStyles = loadedCharacter.charStyles;
             return loadedCharacterStyles;
         }
-        public string GenerateUserConnectionString(UserModel u)
-        {
-            userDatabaseFile = u.userEmail + ".db";
-            loadedUserConnectionString = defaultDatabasePath + userDatabaseFile + defaultDatabasePathSuffix;
-            return loadedUserConnectionString;
-        }
-
-
         #region Experimental
         public void UnloadUser()
         {
@@ -58,7 +49,6 @@ namespace ESOCompanion.Data
             usersCharacters = new List<CharacterModel>();
             loadedCharacter = new CharacterModel();
             loadedCharacterStyles = new List<StyleModel>();
-            loadedUserConnectionString = "";
             userDatabaseFile = "";
         }
         #endregion

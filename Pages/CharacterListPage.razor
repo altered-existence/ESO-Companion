@@ -44,13 +44,6 @@ else
     public List<CharacterModel> characters;
     protected override async Task OnInitializedAsync()
     {
-        if (characters is null)
-        {
-            await _db.CreateCharactersTable();
-        }
-        else
-        {
             characters = await _db.GetCharacters();
-        }
     }
 }
