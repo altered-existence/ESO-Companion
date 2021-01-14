@@ -29,8 +29,6 @@ else
 {
     @foreach (var user in users)
     {
-        UserModel tempUser = new UserModel();
-        tempUser = user;
         <div class="container" onclick="app.LoadUser(@user)">
             <div class="row"><span>@user.userName</span></div>
         </div>
