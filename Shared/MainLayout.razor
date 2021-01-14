@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+@using ESOCompanion
+@using ESOCompanion.Data
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    @*<div class="top-row px-4">
+            <a class="oi oi-home" href="">Home</a>
+            <a class="oi oi-terminal" href="">Register</a>
+            <a class="oi oi-account-login" href="">Login</a>
+            <a class="oi oi-wrench" href="settingsPage">Settings</a>
+            <a class="oi oi-question-mark" href="aboutPage">About</a>
+        </div>*@
+
+    <div class="content px-4">
+        @Body
+    </div>
+    <Footer />
+</div>
+
+@code {
+
+}

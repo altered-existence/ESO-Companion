@@ -1,0 +1,106 @@
+@font-face {
+    font-family: Pelagiad;
+    src: url(../fonts/Pelagiad.ttf);
+}
+
+:root {
+    /*Light Theme*/
+    --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --background-color: linear-gradient(rgba(200, 200, 200, 0.90), rgba(100, 100, 100, 0.9));
+    --background-attachment: fixed;
+    --background-position: center;
+    --background-size: cover;
+    --font-color: black;
+    --border: 5px solid black;
+}
+
+.dark-mode {
+    /*Dark Theme*/
+    --font-family: 'Roboto', sans-serif;
+    --background-color: linear-gradient(rgba(0, 0, 0, 0.90), rgba(100, 100, 100, 0.9));
+    --background-attachment: fixed;
+    --background-position: center;
+    --background-size: cover;
+    --font-color: white;
+    --border: 5px solid black;
+}
+
+.elder-scrolls {
+    /* UI Inspired by Elder Scrolls */
+    --font-family: 'Pelagiad';
+    --background-image: url(/img/brown_age_by_darkwood67.jpg);
+    --background-color: rgba(0, 0, 0, 0.1);
+    --background-attachment: fixed;
+    --background-position: center;
+    --background-size: cover;
+    --font-color: white;
+    --border: 1px thin black;
+}
+/* Custom Theme Settings */
+html, body {
+    font-family: var(--font-family);
+    background-image: var(--background-image);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-family);
+    color: var(--font-color)
+}
+/* CSS to Color Styles by Rarity*/
+.btn-blue {
+    color: blue;
+    background-color: white;
+    border-color: black;
+}
+
+    .btn-blue a:hover {
+        color: blue;
+        background-color: antiquewhite;
+        border: outset black;
+    }
+
+    .btn-blue a:active {
+        color: white;
+        background-color: blue;
+        border: inset black
+    }
+
+.btn-purple {
+    color: purple;
+    background-color: white;
+    border-color: black;
+}
+
+    .btn-purple a:hover {
+        color: purple;
+        background-color: antiquewhite;
+        border: outset black;
+    }
+
+    .btn-purple a:active {
+        color: white;
+        background-color: purple;
+        border: inset black
+    }
+
+.btn-gold {
+    color: gold;
+    background-color: white;
+    border-color: black;
+}
+
+    .btn-gold a:hover {
+        color: gold;
+        background-color: antiquewhite;
+        border: outset black;
+    }
+
+    .btn-gold a:active {
+        color: white;
+        background-color: gold;
+        border: inset black
+    }
+/*===============================*/

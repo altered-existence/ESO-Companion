@@ -1,0 +1,227 @@
+﻿@page "/stylesListPage"
+@using DataAccessLibrary.SQLite
+@using DataAccessLibrary.Models
+@using ESOCompanion.Utilities
+@using ESOScraper
+@inject IStyleData _db
+@inject ESOScraper.Scraper scraper
+
+@if (styles == null)
+{
+    <h1 class="text-center">LOADING...</h1>
+}
+else
+{
+    <h1 class="text-center"><img class="float-left" alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="64" height="64">Styles List</h1>
+
+    <div class="align-self-auto">
+        <table style="border: outset black 4px;" class="table table-responsive table-hover table-striped table-bordered table-dark align-self-auto">
+            <thead class="thead-dark">
+                <tr>
+                    <th><img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="24" height="24"></th>
+                    <th>ID</th>
+                    <th>Style</th>
+                    <th>Rank</th>
+                    <th>Done</th>
+                    <th>Axes</th>
+                    <th>Belts</th>
+                    <th>Boots</th>
+                    <th>Bows</th>
+                    <th>Chests</th>
+                    <th>Daggers</th>
+                    <th>Gloves</th>
+                    <th>Helmets</th>
+                    <th>Legs</th>
+                    <th>Maces</th>
+                    <th>Shields</th>
+                    <th>Shoulders</th>
+                    <th>Staves</th>
+                    <th>Swords</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var style in styles)
+                {                
+                <tr style="border-color: @style.StyleNameTextColor">
+                    <td>
+                        <a class="oi oi-shield" style="@style.StyleNameTextColor"></a>
+                    </td>
+                    <td>
+                        @style.ID
+                    </td>
+                    <td>
+                        <a style="color:@style.StyleNameTextColor" href="@style.StyleURL">@style.Name</a>
+                    </td>
+                    <td style="color:@style.StyleNameTextColor">@utils.GetRank(style.StyleNameTextColor)</td>
+                    @if (utils.isCompleted(style))
+                    {
+                        <td><img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="18" height="18"></td>
+                    }
+                    else
+                    {
+                        <td>@utils.CalculatePercentages(utils.GetCompletedCount(style))%</td>
+                    }
+                    @if (style.Axes)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Belts)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Belts)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Boots)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Bows)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Chests)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Daggers)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Gloves)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Helmets)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Legs)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Maces)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Shields)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Shoulders)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    @if (style.Staves)
+                    {
+                        <td><a style="color:green" class="oi oi-check"></a></td>
+                    }
+                    else
+                    {
+                        <td><a style="color:red" class="oi oi-x"></a></td>
+                    }
+                    <td>
+                    @if (style.Swords)
+                    {
+                        <a style="color:green" class="oi oi-check"></a>
+                    }
+                    else
+                    {
+                        <a style="color:red" class="oi oi-x"></a>
+                    }
+                    </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container align-self-auto" style="padding-bottom:4em">
+        <button class="btn btn-primary" style="padding:2px" @onclick="CheckDB">Check DB</button>
+        <button class="btn btn-primary" style="padding:2px" @onclick="ScrapeIt">Scrape Web</button>
+        <button class="btn btn-danger" style="padding:2px" @onclick="InsertStyles">Update Database</button>
+    </div>
+}
+@code {
+    public List<StyleModel> styles;
+    StyleDisplayUtilities utils = new StyleDisplayUtilities();
+    protected override async Task OnInitializedAsync()
+    {
+        styles = await _db.GetStyles();
+    }
+    private async Task CheckDB()
+    {
+        styles = await _db.GetStyles();
+    }
+    private async Task ScrapeIt()
+    {
+        styles = await scraper.SpawnNewList();
+    }
+    private async Task InsertStyles()
+    {
+        foreach (var style in styles)
+        {
+            await _db.InsertStyle(style);
+        }
+    }
+    private async Task UpdateEntry(int ID)
+    {
+        foreach (var style in styles)
+        {
+            await _db.InsertStyle(style);
+        }
+    }
+}

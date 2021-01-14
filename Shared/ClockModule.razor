@@ -1,0 +1,15 @@
+﻿@using System
+<div class="text-center p-4">
+    <span class="oi oi-clock" aria-hidden="true">@time</span>
+    <span class="oi oi-calendar" aria-hidden="true">@date</span>
+</div>
+@code {
+    public string time;
+    public string date;
+    protected override Task OnInitializedAsync()
+    {
+        time = System.DateTime.Now.ToShortTimeString();
+        date = System.DateTime.Now.ToShortDateString();
+        return base.OnInitializedAsync();
+    }
+}

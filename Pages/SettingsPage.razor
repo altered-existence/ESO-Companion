@@ -1,0 +1,35 @@
+﻿@page "/settingsPage"
+@using ESOCompanion.Data
+
+<h1 class="text-center"><img class="float-left" src="img/icon.png" width="64" height="64">Settings</h1>
+
+<div class="container col-10">
+    <div class="form-group">
+        <form>
+            <label class="form-label" for="toggleTheme">Toggle Theme:</label>
+            <input type="checkbox" class="form-control-file" id="toggleTheme">
+
+            <label class="form-label" for="databaseFile">Select Database File</label>
+            <input type="file" class="form-control-file" id="databaseFile">
+
+            <label class="form-label" for="addonsFolder">Select AddOns Folder</label>
+            <input type="file" class="form-control-file" id="addonsFolder">
+
+        </form>
+    </div>
+</div>
+
+@code {
+    public void onDatabaseFileSelect(string databaseFilePath)
+    {
+
+    }
+    public void onAddonsFolderSelect(string addonsPath)
+    {
+
+    }
+    public void GetTheme()
+    {
+
+    }
+}

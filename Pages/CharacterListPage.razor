@@ -1,0 +1,56 @@
+﻿@page "/characterListPage"
+@using DataAccessLibrary.SQLite
+@using DataAccessLibrary.Models
+@inject ICharacterData _db
+
+@if (characters == null)
+{
+    <h1 class="text-center">LOADING...</h1>
+}
+else
+{
+    <h1 class="text-center">Character List</h1>
+    <div class="container-fluid">
+        <table class="table table-responsive table-hover table-striped table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th><a href="addCharacterPage" class="oi oi-plus">Add New</a></th>
+                    <th>ID</th>
+                    <th>Character</th>
+                    <th>Level</th>
+                    <th>Race</th>
+                    <th>Class</th>
+                    <th>Save File</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var character in characters)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@character.ID</td>
+                        <td>@character.charName</td>
+                        <td>@character.charLevel</td>
+                        <td>@character.charRace</td>
+                        <td>@character.charClass</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    public List<CharacterModel> characters;
+    protected override async Task OnInitializedAsync()
+    {
+        if (characters is null)
+        {
+            await _db.CreateCharactersTable();
+        }
+        else
+        {
+            characters = await _db.GetCharacters();
+        }
+    }
+}

@@ -1,0 +1,77 @@
+﻿@page "/addCharacterPage"
+@using DataAccessLibrary.SQLite
+@using DataAccessLibrary.Models
+@inject ICharacterData _db
+
+<h1 class="text-center">Add Character</h1>
+<div class="container">
+    <EditForm Model="@character" OnValidSubmit="@InsertCharacter">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="charName">Name</span>
+            </div>
+            <InputText id="charName" @bind-Value="character.charName" />
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group" id="charLevel">Level</span>
+            </div>
+            <InputNumber id="charLevel" @bind-Value="character.charLevel" />
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group" id="charRace">Race</span>
+            </div>
+            <InputSelect id="charRace" @bind-Value="character.charRace" />
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group" id="charClass">Class</span>
+            </div>
+            <InputSelect id="charClass" @bind-Value="character.charClass" />
+        </div>
+        <button class="btn btn-primary oi oi-plus" @onclick="InsertCharacter"> Submit</button>
+    </EditForm>
+</div>
+<div class="container text-center">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="characterName">Name</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Name" aria-describedby="characterName">
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownRaceMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Race
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownRaceMenu">
+            <a class="dropdown-item" href="#">Argonian</a>
+            <a class="dropdown-item" href="#">Breton</a>
+            <a class="dropdown-item" href="#">Imperial</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownClassMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownClassMenu">
+            <a class="dropdown-item" href="#">Dragonknight</a>
+            <a class="dropdown-item" href="#">Nightblade</a>
+            <a class="dropdown-item" href="#">Templar</a>
+        </div>
+    </div>
+    <button class="btn btn-secondary oi oi-plus" type="submit" aria-expanded="false">Add</button>
+</div>
+@code {
+
+    CharacterModel character = new CharacterModel();
+
+    private async Task InsertCharacter()
+    {
+        await _db.InsertCharacter(character);
+    }
+}
