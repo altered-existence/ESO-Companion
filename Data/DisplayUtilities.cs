@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ESOCompanion.Utilities
 {
-    public class StyleDisplayUtilities
+    public class DisplayUtilities
     {
         public string GetRank(string StyleNameTextColor)
         {
