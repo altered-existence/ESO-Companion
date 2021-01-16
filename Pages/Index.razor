@@ -6,8 +6,9 @@
 @using DataAccessLibrary.Models
 @inject ICharacterData characterDB
 @inject IUserData userDB
-    <h1 style="text-align:center;"><img class="float-left" src="img/icon.png" width="64" height="64" />ESO Companion</h1>
-    <p>Track your ESO Characters and Styles/Motifs</p>
+@inject IStyleData stylesDB
+<h1 style="text-align:center;"><img class="float-left" src="img/icon.png" width="64" height="64" />ESO Companion</h1>
+<p>Track your ESO Characters and Styles/Motifs</p>
 <div class="container">
     <ClockModule></ClockModule>
     <div class="text-center">
@@ -23,7 +24,7 @@
 </div>
 @if (users is null)
 {
-
+    userDB.CreateUsersTable();
 }
 else
 {
@@ -33,16 +34,19 @@ else
             <div class="row"><span>@user.userName</span></div>
         </div>
     }
-
-    }
-    @if (userLoaded)
+    @if (styles is null)
     {
-        @if (characters is null)
-        {
-
-        }
-        else
-        {
+        stylesDB.CreateStylesTable();
+    }
+}
+@if (userLoaded)
+{
+    @if (characters is null)
+    {
+        characterDB.CreateCharactersTable();
+    }
+    else
+    {
 
         @foreach (var character in characters)
         {
@@ -56,27 +60,28 @@ else
             </div>
         }
 
-        }
     }
-    @code{
-        public List<UserModel> users;
-        public List<CharacterModel> characters;
-        public bool userLoaded;
-        protected override async Task OnInitializedAsync()
-        {
-            await GetUserList();
-        }
-        public async Task GetUserList()
-        {
-            users = await userDB.GetUsers();
-        }
-        public async Task GetCharacterList()
-        {
-            characters = await characterDB.GetCharacters();
-        }
-        public void OnUserSelected(UserModel user)
-        {
-            GetCharacterList();
-            userLoaded = true;
-        }
+}
+@code{
+    public List<UserModel> users;
+    public List<CharacterModel> characters;
+    public List<StyleModel> styles;
+    public bool userLoaded;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetUserList();
     }
+    public async Task GetUserList()
+    {
+        users = await userDB.GetUsers();
+    }
+    public async Task GetCharacterList()
+    {
+        characters = await characterDB.GetCharacters();
+    }
+    public void OnUserSelected(UserModel user)
+    {
+        GetCharacterList();
+        userLoaded = true;
+    }
+}

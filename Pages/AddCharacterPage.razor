@@ -2,12 +2,19 @@
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
 @inject ICharacterData _db
+@inject IUserData userData
 
 <h1 class="text-center">Add Character</h1>
 <div class="container">
     <EditForm Model="@character" OnValidSubmit="@InsertCharacter">
         <DataAnnotationsValidator />
         <ValidationSummary />
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="ID">User ID</span>
+            </div>
+            <InputNumber id="ID" @bind-Value="user.ID" />
+        </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="charName">Name</span>
@@ -24,13 +31,13 @@
             <div class="input-group-prepend">
                 <span class="input-group" id="charRace">Race</span>
             </div>
-            <InputSelect id="charRace" @bind-Value="character.charRace" />
+            <InputText id="charRace" @bind-Value="character.charRace" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group" id="charClass">Class</span>
             </div>
-            <InputSelect id="charClass" @bind-Value="character.charClass" />
+            <InputText id="charClass" @bind-Value="character.charClass" />
         </div>
         <button class="btn btn-primary oi oi-plus" @onclick="InsertCharacter"> Submit</button>
     </EditForm>
@@ -65,8 +72,12 @@
         </div>
     </div>
     <button class="btn btn-secondary oi oi-plus" type="submit" aria-expanded="false">Add</button>
+    <div class="container align-self-auto" style="padding-bottom:4em">
+        <button class="btn btn-danger" style="padding:2px" @onclick="InsertCharacter">Enter Character</button>
+    </div>
 </div>
 @code {
+    UserModel user = new UserModel();
 
     CharacterModel character = new CharacterModel();
 

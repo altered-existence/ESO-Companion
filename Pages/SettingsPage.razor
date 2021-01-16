@@ -1,11 +1,20 @@
 ﻿@page "/settingsPage"
 @using ESOCompanion.Data
 
+@using DataAccessLibrary.SQLite
+
+@inject ISQLiteDataAccess companionDB
+@inject IUserData userData
+@inject ICharacterData characterData
+@inject IStyleData styleData
 <h1 class="text-center"><img class="float-left" src="img/icon.png" width="64" height="64">Settings</h1>
 
 <div class="container col-10">
     <div class="form-group">
         <form>
+            <div class="container align-self-auto" style="padding-bottom:4em">
+                <button class="btn btn-danger" style="padding:2px" @onclick="CreateNewDatabase">Create New Database</button>
+            </div>
             <label class="form-label" for="toggleTheme">Toggle Theme:</label>
             <input type="checkbox" class="form-control-file" id="toggleTheme">
 
@@ -20,13 +29,23 @@
 </div>
 
 @code {
+
     public void onDatabaseFileSelect(string databaseFilePath)
     {
-
+        companionDB.connectionString = databaseFilePath;
     }
     public void onAddonsFolderSelect(string addonsPath)
     {
 
+    }
+    private void CreateNewDatabase()
+    {
+        //userData.ClearTable();
+        characterData.ClearTable();
+        styleData.ClearTable();
+        userData.CreateUsersTable();
+        characterData.CreateCharactersTable();
+        styleData.CreateStylesTable();
     }
     public void GetTheme()
     {

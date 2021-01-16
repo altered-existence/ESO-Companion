@@ -47,7 +47,7 @@ else
                         <a class="oi oi-shield" style="@style.StyleNameTextColor"></a>
                     </td>
                     <td>
-                        @style.ID
+                        @style.styleID
                     </td>
                     <td>
                         <a style="color:@style.StyleNameTextColor" href="@style.StyleURL">@style.Name</a>
@@ -217,11 +217,11 @@ else
             await _db.InsertStyle(style);
         }
     }
-    private async Task UpdateEntry(int ID)
+    private async Task UpdateEntries()
     {
         foreach (var style in styles)
         {
-            await _db.InsertStyle(style);
+            await _db.UpdateEntry(style);
         }
     }
 }
