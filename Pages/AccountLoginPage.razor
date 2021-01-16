@@ -1,10 +1,52 @@
 ﻿@page "/accountLoginPage"
 @using ESOCompanion.Data
 
+@using DataAccessLibrary.SQLite
+@using DataAccessLibrary.Models
+@inject IUserData userData
 <h1 class="oi oi-circle-check"> Account Login Page</h1>
 
 Under Construction...
+<h1 class="text-center">Welcome Back User</h1>
+<div class="container">
+    <EditForm Model="@userData" OnValidSubmit="@SearchUsers">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="charName">UserName</span>
+            </div>
+            <InputText id="userName" @bind-Value="user.userName" />
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group" id="charRace">Password</span>
+            </div>
+            <InputText id="userPassword" @bind-Value="user.userPassword" />
+        </div>
+        <button class="btn btn-primary oi oi-plus" @onclick="SearchUsers"> Submit</button>
+    </EditForm>
+</div>
 
 @code {
+    UserModel user = new UserModel();
+    public List<UserModel> users;
 
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userData.GetUsers();
+    }
+    private async Task SearchUsers()
+    {
+        // If user does exist, login, else return
+        if (users.Contains(user))
+        {
+            Console.WriteLine(user.userName + " found!");
+            await userData.SearchForUser(user.userName, user.userPassword); }
+        else
+        {
+            Console.WriteLine(user.userName + " not found!");
+            return;
+        }
+    }
 }
