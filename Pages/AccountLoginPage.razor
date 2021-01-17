@@ -14,13 +14,13 @@ Under Construction...
         <ValidationSummary />
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="userName">UserName</span>
+                <span class="input-group-text" id="charName">UserName</span>
             </div>
             <InputText id="userName" @bind-Value="user.userName" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group" id="userPassword">Password</span>
+                <span class="input-group" id="charRace">Password</span>
             </div>
             <InputText id="userPassword" @bind-Value="user.userPassword" />
         </div>
@@ -42,7 +42,7 @@ Under Construction...
         if (user.userName != "" && user.userPassword != "")
         {
             UserModel userCheck = await userData.SearchForUser(user.userName);
-            if(userCheck != null)
+            if (userCheck != null)
             {
                 VerifyUserPassword(userCheck);
             }

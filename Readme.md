@@ -1,5 +1,5 @@
 # ESO Companion App
-### By: Topher Lee
+### [Altered Existence](https://github.com/altered-existence) && [PC-Pi]()
 
 -----
 #### Project Outline
@@ -36,3 +36,8 @@
 
 [ ] - Allow users to track their characters from anywhere in the world...
 
+#### Contributors:
+
+[Topher Lee](https://github.com/TopherLee513)
+
+[Gary Chisenhall](https://github.com/glchisenhall)

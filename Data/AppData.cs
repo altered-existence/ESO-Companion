@@ -26,11 +26,11 @@ namespace ESOCompanion.Data
             _users = await userData.GetUsers();
             return _users;
         }
-        public List<CharacterModel> GetUsersCharacterList(UserModel u)
-        {
-            usersCharacters = u.characters;
-            return usersCharacters;
-        }
+        //public List<CharacterModel> GetUsersCharacterList(UserModel u)
+        //{
+        //    usersCharacters = u.characters;
+        //    return usersCharacters;
+        //}
         public CharacterModel LoadCharacter(CharacterModel character)
         {
             loadedCharacter = character;
