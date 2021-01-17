@@ -1,12 +1,11 @@
 ﻿@page "/accountLoginPage"
-@using ESOCompanion.Data
 
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
 @inject IUserData userData
-<h1 class="oi oi-circle-check"> Account Login Page</h1>
 
-Under Construction...
+
+<h1 class="oi oi-circle-check"> Account Login Page</h1>
 <h1 class="text-center">Welcome Back User</h1>
 <div class="container">
     <EditForm Model="@userData" OnValidSubmit="@SearchUsers">
@@ -18,12 +17,14 @@ Under Construction...
             </div>
             <InputText id="userName" @bind-Value="user.userName" />
         </div>
+
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group" id="userPassword">Password </span>
+                <span class="input-group-text" id="userPassword">Password </span>
             </div>
             <InputText id="userPassword" @bind-Value="user.userPassword" />
         </div>
+
         <button class="btn btn-primary oi oi-plus" @onclick="SearchUsers"> Submit</button>
     </EditForm>
 </div>

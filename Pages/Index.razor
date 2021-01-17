@@ -1,12 +1,5 @@
 ﻿@page "/"
 
-@using ESOCompanion.Data
-@inject AppData app
-@using DataAccessLibrary.SQLite
-@using DataAccessLibrary.Models
-@inject ICharacterData characterDB
-@inject IUserData userDB
-@inject IStyleData stylesDB
 <h1 style="text-align:center;"><img class="float-left" src="img/icon.png" width="64" height="64" />ESO Companion</h1>
 <p>Track your ESO Characters and Styles/Motifs</p>
 <div class="container">
@@ -22,62 +15,6 @@
         </ul>
     </div>
 </div>
-@if (users is null)
-{
-
-}
-else
-{
-    @foreach (var user in users)
-    {
-        <div class="container" onclick="app.LoadUser(@user)">
-            <div class="row"><span>@user.userName</span></div>
-        </div>
-    }
-}
-@if (userLoaded)
-{
-    @if (characters is null)
-    {
-
-    }
-    else
-    {
-
-        @foreach (var character in characters)
-        {
-            <div class="container" onclick="LoadCharacter(@character.ID)">
-
-                <div class="row"><span>@character.charName</span></div>
-                <div class="row"><span>@character.charLevel.ToString()</span></div>
-                <div class="row"><span>@character.charRace</span></div>
-                <div class="row"><span>@character.charClass</span></div>
-
-            </div>
-        }
-
-    }
-}
 @code{
-    public List<UserModel> users;
-    public List<CharacterModel> characters;
-    public List<StyleModel> styles;
-    public bool userLoaded = false;
-    protected override async Task OnInitializedAsync()
-    {
-        await GetUserList();
-    }
-    public async Task GetUserList()
-    {
-        users = await userDB.GetUsers();
-    }
-    public async Task GetCharacterList()
-    {
-        characters = await characterDB.GetCharacters();
-    }
-    public void OnUserSelected(UserModel user)
-    {
-        GetCharacterList();
-        userLoaded = true;
-    }
+
 }

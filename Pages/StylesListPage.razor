@@ -56,16 +56,17 @@ else
                             <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
                         </td>
                         @*Done%*@
-                        <td colspan="15">
-                            @if (utils.isCompleted(style))
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+
+                    <td colspan="15">
+                        @if (utils.isCompleted(style))
+                        {
+                            <a style="color:green" class="oi oi-check"></a>
+                        }
+                        else
+                        {
+                            <a style="color:red" class="oi oi-x"></a>
+                        }
+                    </td>
                         <td><a href="@style.StyleURL">Link</a></td>
                     </tr>
                 }
@@ -110,17 +111,16 @@ else
                             <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
                         </td>
                         @*Done%*@
-                        <td colspan="15">
-                            @if (utils.isCompleted(style))
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
-
+                    <td colspan="15">
+                        @if (utils.isCompleted(style))
+                        {
+                            <a style="color:green" class="oi oi-check"></a>
+                        }
+                        else
+                        {
+                        <a style="color:red" class="oi oi-x"></a>
+                        }
+                    </td>
                         <td><a href="@style.StyleURL">Link</a></td>
                     </tr>
                 }
@@ -165,17 +165,17 @@ else
                             <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
                         </td>
                         @*Done%*@
-                        <td>
-                            @if (utils.isCompleted(style))
-                            {
-                                <img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="18" height="18">
-                            }
-                            else
-                            {
-                                <span>@utils.CalculatePercentages(utils.GetCompletedCount(style))%</span>
-                            }
-                        </td>
 
+                    <td>
+                        @if (utils.isCompleted(style))
+                        {
+                            <img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="18" height="18">
+                        }
+                        else
+                        {
+                            <span>@utils.CalculatePercentages(utils.GetCompletedCount(style))%</span>
+                        }
+                    </td>
                         <td>
                             @if (style.Axes)
                             {
@@ -350,8 +350,8 @@ else
     public List<StyleModel> superiorStyles = new List<StyleModel>();
     public List<StyleModel> epicStyles = new List<StyleModel>();
     public List<StyleModel> legendaryStyles = new List<StyleModel>();
-    StyleDisplayUtilities utils = new StyleDisplayUtilities();
 
+    StyleDisplayUtilities utils = new StyleDisplayUtilities();
 
     protected override async Task OnInitializedAsync()
     {
