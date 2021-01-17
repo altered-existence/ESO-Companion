@@ -40,14 +40,38 @@
     private async Task SearchUsers()
     {
         // If user does exist, login, else return
-        if (users.Contains(user))
+        if (user.userName != "" && user.userPassword != "")
         {
-            Console.WriteLine(user.userName + " found!");
-            await userData.SearchForUser(user.userName, user.userPassword); }
+            UserModel userCheck = await userData.SearchForUser(user.userName);
+            if(userCheck != null)
+            {
+                VerifyUserPassword(userCheck);
+            }
+        }
         else
         {
             Console.WriteLine(user.userName + " not found!");
             return;
+        }
+    }
+    private void VerifyUserPassword(UserModel userCheck)
+    {
+        if (user.userName == userCheck.userName)
+        {
+            if (userCheck.userPassword == user.userPassword)
+            {
+                AppData.loadedUser = userCheck;
+                Console.WriteLine(AppData.loadedUser.userName + " success!");
+            }
+            else
+            {
+                Console.WriteLine(user.userName + " Password doesn't match!");
+                return;
+            }
+        }
+        else
+        {
+            Console.WriteLine(user.userName + "User not found!");
         }
     }
 }
