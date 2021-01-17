@@ -43,7 +43,7 @@
         if (user.userName != "" && user.userPassword != "")
         {
             UserModel userCheck = await userData.SearchForUser(user.userName);
-            if(userCheck != null)
+            if (userCheck != null)
             {
                 VerifyUserPassword(userCheck);
             }
