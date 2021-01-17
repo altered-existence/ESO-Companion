@@ -1,0 +1,38 @@
+﻿@page "/accountPage"
+@using DataAccessLibrary.Models
+@using DataAccessLibrary.SQLite
+@using ESOCompanion.Data
+@inject AppData data
+@inject UserData userData
+
+<h3>AccountPage</h3>
+@if (users is null)
+{
+    <AccountRegisterModule />
+}
+else
+{
+    <AccountLoginModule />
+}
+@code {
+    public List<UserModel> users;
+    public UserModel user;
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userData.GetUsers();
+    }
+    public async Task SearchUsers()
+    {
+        // If user does exist, login, else return
+        if (users.Contains(user))
+        {
+            Console.WriteLine(user.userName + " found!");
+            await userData.SearchForUser(user.userName, user.userPassword);
+        }
+        else
+        {
+            Console.WriteLine(user.userName + " not found!");
+            return;
+        }
+    }
+}
