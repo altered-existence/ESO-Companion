@@ -11,7 +11,7 @@ namespace ESOCompanion.Data
         ICharacterData characterData;
         IStyleData styleData;
         private List<UserModel> _users { get; set; }
-        public UserModel loadedUser { get; set; }
+        public static UserModel loadedUser { get; set; }
         public List<CharacterModel> usersCharacters { get; set; }
         public CharacterModel loadedCharacter { get; set; }
         public List<StyleModel> loadedCharacterStyles { get; set; }
