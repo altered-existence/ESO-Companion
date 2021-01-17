@@ -24,7 +24,7 @@
 </div>
 @if (users is null)
 {
-    userDB.CreateUsersTable();
+
 }
 else
 {
@@ -34,16 +34,12 @@ else
             <div class="row"><span>@user.userName</span></div>
         </div>
     }
-    @if (styles is null)
-    {
-        stylesDB.CreateStylesTable();
-    }
 }
 @if (userLoaded)
 {
     @if (characters is null)
     {
-        characterDB.CreateCharactersTable();
+
     }
     else
     {
@@ -66,7 +62,7 @@ else
     public List<UserModel> users;
     public List<CharacterModel> characters;
     public List<StyleModel> styles;
-    public bool userLoaded;
+    public bool userLoaded = false;
     protected override async Task OnInitializedAsync()
     {
         await GetUserList();

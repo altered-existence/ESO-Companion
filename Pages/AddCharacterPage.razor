@@ -1,4 +1,5 @@
 ﻿@page "/addCharacterPage"
+@using ESOCompanion.Data
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
 @inject ICharacterData _db
@@ -9,12 +10,12 @@
     <EditForm Model="@character" OnValidSubmit="@InsertCharacter">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <div class="input-group mb-3">
+        @*<div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="ID">User ID</span>
             </div>
             <InputNumber id="ID" @bind-Value="character.ID" />
-        </div>
+        </div>*@
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="charName">Name</span>
@@ -77,12 +78,13 @@
     </div>
 </div>
 @code {
-    UserModel user = new UserModel();
+    UserModel user = AppData.loadedUser;
 
     CharacterModel character = new CharacterModel();
 
     private async Task InsertCharacter()
     {
-        await _db.InsertCharacter(character);
+        character.ID = user.ID;
+           await _db.InsertCharacter(character);
     }
 }
