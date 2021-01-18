@@ -2,12 +2,13 @@
 
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
+@using ESOCompanion.Data
 @inject IUserData userData
 
 
 <h1 class="oi oi-circle-check"> Account Login Page</h1>
 <h1 class="text-center">Welcome Back User</h1>
-<div class="container">
+<div class="container align-items-center">
     <EditForm Model="@userData" OnValidSubmit="@SearchUsers">
         <DataAnnotationsValidator />
         <ValidationSummary />
