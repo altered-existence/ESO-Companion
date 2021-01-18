@@ -27,7 +27,7 @@ else
         if (users.Contains(user))
         {
             Console.WriteLine(user.userName + " found!");
-            await userData.SearchForUser(user.userName, user.userPassword);
+            await userData.SearchForUser(user.userName);
         }
         else
         {

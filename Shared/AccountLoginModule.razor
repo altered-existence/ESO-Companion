@@ -2,11 +2,14 @@
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.SQLite
 
-@inject AccountPage accPage
 @inject UserData userData
 
-<h3>AccountLoginModule</h3>
-<div class="container">
+
+<div class="container align-items-center">
+    <div class="align-content-center">
+        <img src="~/img/icon.png" width="64" height="64"/>
+    </div>
+    <h3>Login</h3>
     <EditForm Model="@userData" OnValidSubmit="@accPage.SearchUsers">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -24,8 +27,12 @@
             <InputText id="userPassword" @bind-Value="accPage.user.userPassword" />
         </div>
         <button class="btn btn-primary oi oi-plus" @onclick="accPage.SearchUsers"> Submit</button>
+        <div class="align-content-center">
+            <p>Don't have an account?</p>
+            <button class="btn btn-primary oi-plus"> Register</button>
+        </div>
     </EditForm>
 </div>
 @code {
-
+    AccountPage accPage;
 }
