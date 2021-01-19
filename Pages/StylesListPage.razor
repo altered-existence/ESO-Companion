@@ -13,337 +13,360 @@
 else
 {
     <h1 class="text-center"><img class="float-left" alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="64" height="64">Styles List</h1>
-
-    <div class="align-self-auto">
-        <table style="border: outset black 4px;" class="table table-responsive table-hover table-striped table-bordered table-dark align-self-auto">
-            <thead class="thead-dark">
-                <tr>
-                    <th><img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="24" height="24"></th>
-                    <th>ID</th>
-                    <th>Style</th>
-                    <th>Done</th>
-                    <th>Axes</th>
-                    <th>Belts</th>
-                    <th>Boots</th>
-                    <th>Bows</th>
-                    <th>Chests</th>
-                    <th>Daggers</th>
-                    <th>Gloves</th>
-                    <th>Helmets</th>
-                    <th>Legs</th>
-                    <th>Maces</th>
-                    <th>Shields</th>
-                    <th>Shoulders</th>
-                    <th>Staves</th>
-                    <th>Swords</th>
-                    <th>UESP</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var style in superiorStyles)
-                {
-                    <tr style="border-color: @style.StyleNameTextColor">
-
-                        <td>
-                            <a class="oi oi-shield" style="@style.StyleNameTextColor"></a>
-                        </td>
-
-                        <td>
-                            @style.ID
-                        </td>
-
-                        <td>
-                            <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
-                        </td>
-                        @*Done%*@
-
-                    <td colspan="15">
-                        @if (utils.isCompleted(style))
-                        {
-                            <a style="color:green" class="oi oi-check"></a>
-                        }
-                        else
-                        {
-                            <a style="color:red" class="oi oi-x"></a>
-                        }
-                    </td>
-                        <td><a href="@style.StyleURL">Link</a></td>
-                    </tr>
-                }
-            </tbody>
-            <thead class="thead-dark">
-                <tr>
-                    <th><img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="24" height="24"></th>
-                    <th>ID</th>
-                    <th>Style</th>
-                    <th>Done</th>
-                    <th>Axes</th>
-                    <th>Belts</th>
-                    <th>Boots</th>
-                    <th>Bows</th>
-                    <th>Chests</th>
-                    <th>Daggers</th>
-                    <th>Gloves</th>
-                    <th>Helmets</th>
-                    <th>Legs</th>
-                    <th>Maces</th>
-                    <th>Shields</th>
-                    <th>Shoulders</th>
-                    <th>Staves</th>
-                    <th>Swords</th>
-                    <th>UESP</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var style in epicStyles)
-                {
-                    <tr style="border-color: @style.StyleNameTextColor">
-
-                        <td>
-                            <a class="oi oi-shield" style="@style.StyleNameTextColor"></a>
-                        </td>
-
-                        <td>
-                            @style.ID
-                        </td>
-
-                        <td>
-                            <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
-                        </td>
-                        @*Done%*@
-                    <td colspan="15">
-                        @if (utils.isCompleted(style))
-                        {
-                            <a style="color:green" class="oi oi-check"></a>
-                        }
-                        else
-                        {
-                        <a style="color:red" class="oi oi-x"></a>
-                        }
-                    </td>
-                        <td><a href="@style.StyleURL">Link</a></td>
-                    </tr>
-                }
-            </tbody>
-            <thead class="thead-dark">
-                <tr>
-                    <th><img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="24" height="24"></th>
-                    <th>ID</th>
-                    <th>Style</th>
-                    <th>Done</th>
-                    <th>Axes</th>
-                    <th>Belts</th>
-                    <th>Boots</th>
-                    <th>Bows</th>
-                    <th>Chests</th>
-                    <th>Daggers</th>
-                    <th>Gloves</th>
-                    <th>Helmets</th>
-                    <th>Legs</th>
-                    <th>Maces</th>
-                    <th>Shields</th>
-                    <th>Shoulders</th>
-                    <th>Staves</th>
-                    <th>Swords</th>
-                    <th>UESP</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var style in legendaryStyles)
-                {
-                    <tr style="border-color: @style.StyleNameTextColor">
-
-                        <td>
-                            <a class="oi oi-shield" style="@style.StyleNameTextColor"></a>
-                        </td>
-
-                        <td>
-                            @style.ID
-                        </td>
-
-                        <td>
-                            <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
-                        </td>
-                        @*Done%*@
-
-                    <td>
-                        @if (utils.isCompleted(style))
-                        {
-                            <img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="18" height="18">
-                        }
-                        else
-                        {
-                            <span>@utils.CalculatePercentages(utils.GetCompletedCount(style))%</span>
-                        }
-                    </td>
-                        <td>
-                            @if (style.Axes)
+    <div class="container-fluid">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a href="#styleList" class="nav-link active" data-toggle="tab"> List</a>
+            </li>
+            <li class="nav-item">
+                <a href="#styleCards" class="nav-link" data-toggle="tab"> Cards</a>
+            </li>
+            <li class="nav-item">
+                <a href="#characters" class="nav-link" data-toggle="tab"> Characters</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="styleList">
+                <div class="align-self-auto">
+                    <table style="border: outset black 4px;" class="table table-responsive table-hover table-striped table-bordered table-dark align-self-auto">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th><img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="24" height="24"></th>
+                                <th>ID</th>
+                                <th>Style</th>
+                                <th>Done</th>
+                                <th>Axes</th>
+                                <th>Belts</th>
+                                <th>Boots</th>
+                                <th>Bows</th>
+                                <th>Chests</th>
+                                <th>Daggers</th>
+                                <th>Gloves</th>
+                                <th>Helmets</th>
+                                <th>Legs</th>
+                                <th>Maces</th>
+                                <th>Shields</th>
+                                <th>Shoulders</th>
+                                <th>Staves</th>
+                                <th>Swords</th>
+                                <th>UESP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var style in superiorStyles)
                             {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                <tr style="border-color: @style.StyleNameTextColor">
 
-                        <td>
-                            @if (style.Belts)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
+                                    <td>
+                                        <a class="oi oi-shield" style="@style.StyleNameTextColor"></a>
+                                    </td>
 
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        @style.ID
+                                    </td>
 
-                        <td>
-                            @if (style.Boots)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
+                                    </td>
+                                    @*Done%*@
 
-                        <td>
-                            @if (style.Bows)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
+                                    <td colspan="15">
+                                        @if (utils.isCompleted(style))
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+                                    <td><a href="@style.StyleURL">Link</a></td>
+                                </tr>
                             }
-                            else
+                        </tbody>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th><img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="24" height="24"></th>
+                                <th>ID</th>
+                                <th>Style</th>
+                                <th>Done</th>
+                                <th>Axes</th>
+                                <th>Belts</th>
+                                <th>Boots</th>
+                                <th>Bows</th>
+                                <th>Chests</th>
+                                <th>Daggers</th>
+                                <th>Gloves</th>
+                                <th>Helmets</th>
+                                <th>Legs</th>
+                                <th>Maces</th>
+                                <th>Shields</th>
+                                <th>Shoulders</th>
+                                <th>Staves</th>
+                                <th>Swords</th>
+                                <th>UESP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var style in epicStyles)
                             {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                <tr style="border-color: @style.StyleNameTextColor">
 
-                        <td>
-                            @if (style.Chests)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        <a class="oi oi-shield" style="@style.StyleNameTextColor"></a>
+                                    </td>
 
-                        <td>
-                            @if (style.Daggers)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        @style.ID
+                                    </td>
 
-                        <td>
-                            @if (style.Gloves)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
+                                    <td>
+                                        <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
+                                    </td>
+                                    @*Done%*@
+                                    <td colspan="15">
+                                        @if (utils.isCompleted(style))
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+                                    <td><a href="@style.StyleURL">Link</a></td>
+                                </tr>
                             }
-                            else
+                        </tbody>
+                        <thead class="thead-dark">
+                            <tr>
+                                <th><img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="24" height="24"></th>
+                                <th>ID</th>
+                                <th>Style</th>
+                                <th>Done</th>
+                                <th>Axes</th>
+                                <th>Belts</th>
+                                <th>Boots</th>
+                                <th>Bows</th>
+                                <th>Chests</th>
+                                <th>Daggers</th>
+                                <th>Gloves</th>
+                                <th>Helmets</th>
+                                <th>Legs</th>
+                                <th>Maces</th>
+                                <th>Shields</th>
+                                <th>Shoulders</th>
+                                <th>Staves</th>
+                                <th>Swords</th>
+                                <th>UESP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var style in legendaryStyles)
                             {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                <tr style="border-color: @style.StyleNameTextColor">
 
-                        <td>
-                            @if (style.Helmets)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        <a class="oi oi-shield" style="@style.StyleNameTextColor"></a>
+                                    </td>
 
-                        <td>
-                            @if (style.Legs)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        @style.ID
+                                    </td>
 
-                        <td>
-                            @if (style.Maces)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        <a href="@style.StyleURL" style="@style.StyleNameTextColor">@style.Name</a>
+                                    </td>
+                                    @*Done%*@
 
-                        <td>
-                            @if (style.Shields)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        @if (utils.isCompleted(style))
+                                        {
+                                            <img alt="ON-icon-quest-Book 01.png" src="https://images.uesp.net/3/3a/ON-icon-quest-Book_01.png" width="18" height="18">
+                                        }
+                                        else
+                                        {
+                                            <span>@utils.CalculatePercentages(utils.GetCompletedCount(style))%</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (style.Axes)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
 
-                        <td>
-                            @if (style.Shoulders)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        @if (style.Belts)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
 
-                        <td>
-                            @if (style.Staves)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
 
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        @if (style.Boots)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
 
-                        <td>
-                            @if (style.Swords)
-                            {
-                                <a style="color:green" class="oi oi-check"></a>
-                            }
-                            else
-                            {
-                                <a style="color:red" class="oi oi-x"></a>
-                            }
-                        </td>
+                                    <td>
+                                        @if (style.Bows)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
 
-                        <td><a href="@style.StyleURL">Link</a></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                                    <td>
+                                        @if (style.Chests)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Daggers)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Gloves)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Helmets)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Legs)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Maces)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Shields)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Shoulders)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Staves)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (style.Swords)
+                                        {
+                                            <a style="color:green" class="oi oi-check"></a>
+                                        }
+                                        else
+                                        {
+                                            <a style="color:red" class="oi oi-x"></a>
+                                        }
+                                    </td>
+
+                                    <td><a href="@style.StyleURL">Link</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="styleCards">
+                <p>Profile tab content ...</p>
+            </div>
+            <div class="tab-pane fade" id="characters">
+                <p>Characters tab content ...</p>
+            </div>
+        </div>
     </div>
-
-    <div class="container align-self-auto" style="padding-bottom:4em">
+    <div class="container align-bottom" style="padding-bottom:4em">
         <button class="btn btn-primary" style="padding:2px" @onclick="CheckDB">Check DB</button>
         <button class="btn btn-primary" style="padding:2px" @onclick="ScrapeIt">Scrape Web</button>
         <button class="btn btn-danger" style="padding:2px" @onclick="InsertStyles">Update Database</button>
     </div>
+
+
 }
 @code {
     public List<StyleModel> styles;
