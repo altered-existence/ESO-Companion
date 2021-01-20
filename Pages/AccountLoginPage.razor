@@ -1,15 +1,18 @@
-﻿@page "/accountLoginPage"
+﻿@layout LoginLayout
+@page "/accountLoginPage"
 @using ESOCompanion.Data
 
+@using DataAccessLibrary.Services
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
+@inject AccountManager accounts
 @inject IUserData userData
 <h1 class="oi oi-circle-check"> Account Login Page</h1>
 
 Under Construction...
 <h1 class="text-center">Welcome Back User</h1>
 <div class="container">
-    <EditForm Model="@userData" OnValidSubmit="@SearchUsers">
+    <EditForm Model="@userData" OnValidSubmit="@Login">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="input-group mb-3">
@@ -24,7 +27,7 @@ Under Construction...
             </div>
             <InputText id="userPassword" @bind-Value="user.userPassword" />
         </div>
-        <button class="btn btn-primary oi oi-plus" @onclick="SearchUsers"> Submit</button>
+        <button class="btn btn-primary oi oi-plus" @onclick="Login"> Submit</button>
     </EditForm>
 </div>
 
@@ -36,7 +39,11 @@ Under Construction...
     {
         users = await userData.GetUsers();
     }
-    private async Task SearchUsers()
+    private async Task Login()
+    {
+        await SearchUsers(user);
+    }
+    private async Task SearchUsers(UserModel user)
     {
         // If user does exist, login, else return
         if (user.userName != "" && user.userPassword != "")
@@ -44,33 +51,13 @@ Under Construction...
             UserModel userCheck = await userData.SearchForUser(user.userName);
             if (userCheck != null)
             {
-                VerifyUserPassword(userCheck);
+                AppData.loadedUser = accounts.SearchUsers(userCheck, user);
             }
         }
         else
         {
-            Console.WriteLine(user.userName + " not found!");
+            Console.WriteLine(user.userName + "User name & password required!");
             return;
-        }
-    }
-    private void VerifyUserPassword(UserModel userCheck)
-    {
-        if (user.userName == userCheck.userName)
-        {
-            if (userCheck.userPassword == user.userPassword)
-            {
-                AppData.loadedUser = userCheck;
-                Console.WriteLine(AppData.loadedUser.userName + " success!");
-            }
-            else
-            {
-                Console.WriteLine(user.userName + " Password doesn't match!");
-                return;
-            }
-        }
-        else
-        {
-            Console.WriteLine(user.userName + "User not found!");
         }
     }
 }

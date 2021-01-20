@@ -14,6 +14,9 @@ namespace ESOCompanion
             Console.WriteLine("|        Topher Lee       |");
             Console.WriteLine("| topher.lee.13@gmail.com |");
             Console.WriteLine("|=========================|");
+            Console.WriteLine("|      G. Chisenhall      |");
+            Console.WriteLine("| gchisenhall33@gmail.com |");
+            Console.WriteLine("|=========================|");
 
             CreateHostBuilder(args).Build().Run();
         }
