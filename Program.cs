@@ -12,8 +12,11 @@ namespace ESOCompanion
         {
             Console.WriteLine("|=========================|");
             Console.WriteLine("|      ESO Companion      |");
-            Console.WriteLine("|        Topher Lee       |");
-            Console.WriteLine("| topher.lee.13@gmail.com |");
+            Console.WriteLine("|                         |");
+            Console.WriteLine("| github.com/             |");
+            Console.WriteLine("|      altered-existence/ |");
+            Console.WriteLine("| ESO-Companion           |");
+            Console.WriteLine("|                         |");
             Console.WriteLine("|=========================|");
             Console.WriteLine("|      G. Chisenhall      |");
             Console.WriteLine("| gchisenhall33@gmail.com |");

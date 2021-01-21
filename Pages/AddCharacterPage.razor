@@ -6,7 +6,7 @@
 @inject IUserData userData
 
 <h1 class="text-center">Add Character</h1>
-<div class="container">
+<div class="container align-items-center">
     <EditForm Model="@character" OnValidSubmit="@InsertCharacter">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -18,64 +18,30 @@
         </div>*@
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="charName">Name</span>
+                <span class="input-group-text" id="charName">Name </span>
             </div>
             <InputText id="charName" @bind-Value="character.charName" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group" id="charLevel">Level</span>
+                <span class="input-group-text" id="charLevel">Level </span>
             </div>
             <InputNumber id="charLevel" @bind-Value="character.charLevel" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group" id="charRace">Race</span>
+                <span class="input-group-text" id="charRace">Race </span>
             </div>
             <InputText id="charRace" @bind-Value="character.charRace" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group" id="charClass">Class</span>
+                <span class="input-group-text" id="charClass">Class </span>
             </div>
             <InputText id="charClass" @bind-Value="character.charClass" />
         </div>
         <button class="btn btn-primary oi oi-plus" @onclick="InsertCharacter"> Submit</button>
     </EditForm>
-</div>
-<div class="container text-center">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="characterName">Name</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Name" aria-describedby="characterName">
-    </div>
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownRaceMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Race
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownRaceMenu">
-            <a class="dropdown-item" href="#">Argonian</a>
-            <a class="dropdown-item" href="#">Breton</a>
-            <a class="dropdown-item" href="#">Imperial</a>
-        </div>
-    </div>
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownClassMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownClassMenu">
-            <a class="dropdown-item" href="#">Dragonknight</a>
-            <a class="dropdown-item" href="#">Nightblade</a>
-            <a class="dropdown-item" href="#">Templar</a>
-        </div>
-    </div>
-    <button class="btn btn-secondary oi oi-plus" type="submit" aria-expanded="false">Add</button>
-    <div class="container align-self-auto" style="padding-bottom:4em">
-        <button class="btn btn-danger" style="padding:2px" @onclick="InsertCharacter">Enter Character</button>
-    </div>
 </div>
 @code {
     UserModel user = AppData.loadedUser;

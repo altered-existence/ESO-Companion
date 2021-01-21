@@ -70,7 +70,7 @@ h2, h3, h4 {
     color: white;
     background-color: rgba(0, 0, 0, 0.70);
     border: outset black;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 /* Custom Theme Settings */
 /*html, body {
@@ -91,6 +91,9 @@ div.main {
     color: var(--font-color);
     background-color: var(--background-color);
 }*/
+a {
+    cursor: pointer
+}
 /* End of Custom Settings*/
 a, .btn-link {
     color: #0366d6;
