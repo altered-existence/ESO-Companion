@@ -10,9 +10,10 @@ namespace ESOCompanion.Data
         private readonly IUserData _userData;
         //private readonly ICharacterData _characterData;
         //private readonly IStyleData _styleData;
-        public AppData(IUserData userData/*, ICharacterData characterData, IStyleData styleData*/)
+        public AppData(IUserData userData/*, ICharacterData characterData, IStyleData styleData*/, bool isRegistered = false)
         {
             _userData = userData;
+            this.isRegistered = isRegistered;
             //_characterData = characterData;
             //_styleData = styleData;
         }
@@ -24,7 +25,7 @@ namespace ESOCompanion.Data
         public bool isAdminLoggedIn { get; set; }
         public bool isRegistered { get; set; }
         public bool isLoggedIn { get; set; }
-        public string defaultDatabasePath { get; set; } = "F:\\db\\";
+        public string defaultDatabasePath { get; set; } = "\\db\\";
         public string userDatabaseFile { get; set; }
         public string defaultDatabasePathSuffix { get; set; } = ";Version=3";
         public async Task<List<UserModel>> GetUserList()

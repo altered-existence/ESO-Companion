@@ -1,4 +1,5 @@
-﻿@page "/accountPage"
+﻿@layout LoginLayout
+@page "/accountPage"
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.SQLite
 @using ESOCompanion.Data
@@ -6,7 +7,7 @@
 @inject IUserData userData
 
 <h3>AccountPage</h3>
-@if (users is null)
+@if (!data.isRegistered)
 {
     <AccountRegisterModule />
 }

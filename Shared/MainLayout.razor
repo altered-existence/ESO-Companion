@@ -16,7 +16,7 @@
     <div class="border-top-0 px-3">
         <AuthorizeView>
             <Authorized>
-                <a href="/" @onclick="(() => Logout())">Logout</a>
+                <a href="/accountPage" @onclick="(() => Logout())">Logout</a>
             </Authorized>
             <NotAuthorized>
                 <a href="/accountPage">Login</a>
@@ -56,7 +56,7 @@
         {
             if (accounts.isRegistered(AppData.loadedUser.emailAddress))
             {
-                _name = AppData.loadedUser.emailAddress;
+                _name = AppData.loadedUser.userName;
             }
         }
     }
