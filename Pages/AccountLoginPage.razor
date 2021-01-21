@@ -1,3 +1,4 @@
+
 ﻿@layout LoginLayout
 @page "/accountLoginPage"
 @using ESOCompanion.Data
@@ -5,14 +6,15 @@
 @using DataAccessLibrary.Services
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
+@using ESOCompanion.Data
 @inject AccountManager accounts
 @inject IUserData userData
-<h1 class="oi oi-circle-check"> Account Login Page</h1>
 
-Under Construction...
+
+<h1 class="oi oi-circle-check"> Account Login Page</h1>
 <h1 class="text-center">Welcome Back User</h1>
-<div class="container">
-    <EditForm Model="@userData" OnValidSubmit="@Login">
+<div class="container align-items-center">
+    <EditForm Model="@userData" OnValidSubmit="@SearchUsers">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="input-group mb-3">
@@ -21,13 +23,15 @@ Under Construction...
             </div>
             <InputText id="userName" @bind-Value="user.userName" />
         </div>
+
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group" id="userPassword">Password </span>
+                <span class="input-group-text" id="userPassword">Password </span>
             </div>
             <InputText id="userPassword" @bind-Value="user.userPassword" />
         </div>
-        <button class="btn btn-primary oi oi-plus" @onclick="Login"> Submit</button>
+        <button class="btn btn-primary oi oi-plus" @onclick="Login"> Login</button>
+        <button class="btn btn-primary oi oi-plus" @onclick="SearchUsers"> Search</button>
     </EditForm>
 </div>
 

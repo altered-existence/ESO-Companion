@@ -12,7 +12,7 @@
 }
 <h1 class="oi oi-circle-check"> Account Register Page</h1>
 <h1 class="text-center">Welcome Noob User</h1>
-<div class="container">
+<div class="container align-items-center">
     <EditForm Model="@userData" OnValidSubmit="@InsertUser">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -24,13 +24,13 @@
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group" id="userEmail">Email </span>
+                <span class="input-group-text" id="userEmail">Email </span>
             </div>
             <InputText id="userEmail" @bind-Value="user.userEmail" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group" id="userPassword">Password </span>
+                <span class="input-group-text" id="userPassword">Password </span>
             </div>
             <InputText id="userPassword" @bind-Value="user.userPassword" />
         </div>

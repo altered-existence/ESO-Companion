@@ -7,7 +7,11 @@ namespace ESOCompanion.Data
 {
     public class AppData
     {
-        IUserData userData;
+        private readonly IUserData _userData;
+        public AppData(IUserData userData)
+        {
+            _userData = userData;
+        }
         ICharacterData characterData;
         IStyleData styleData;
         private List<UserModel> _users { get; set; }
@@ -23,20 +27,19 @@ namespace ESOCompanion.Data
         public string defaultDatabasePathSuffix { get; set; } = ";Version=3";
         public async Task<List<UserModel>> GetUserList()
         {
-            _users = await userData.GetUsers();
+            _users = await _userData.GetUsers();
             return _users;
         }
-        //public List<CharacterModel> GetUsersCharacterList(UserModel u)
-        //{
-        //    usersCharacters = u.characters;
-        //    return usersCharacters;
-        //}
+        public List<CharacterModel> GetUsersCharacterList(UserModel u)
+        {
+            usersCharacters = u.characters;
+            return usersCharacters;
+        }
         public CharacterModel LoadCharacter(CharacterModel character)
         {
             loadedCharacter = character;
             return loadedCharacter;
         }
-
         public List<StyleModel> GetCharactersStyleList(CharacterModel character)
         {
             loadedCharacterStyles = loadedCharacter.charStyles;
