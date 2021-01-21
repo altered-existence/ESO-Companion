@@ -2,18 +2,21 @@
 using DataAccessLibrary.SQLite;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 namespace ESOCompanion.Data
 {
     public class AppData
     {
+        public static string role;
         private readonly IUserData _userData;
-        public AppData(IUserData userData)
+        //private readonly ICharacterData _characterData;
+        //private readonly IStyleData _styleData;
+        public AppData(IUserData userData/*, ICharacterData characterData, IStyleData styleData*/, bool isRegistered = false)
         {
             _userData = userData;
+            this.isRegistered = isRegistered;
+            //_characterData = characterData;
+            //_styleData = styleData;
         }
-        ICharacterData characterData;
-        IStyleData styleData;
         private List<UserModel> _users { get; set; }
         public static UserModel loadedUser { get; set; }
         public List<CharacterModel> usersCharacters { get; set; }
@@ -22,18 +25,13 @@ namespace ESOCompanion.Data
         public bool isAdminLoggedIn { get; set; }
         public bool isRegistered { get; set; }
         public bool isLoggedIn { get; set; }
-        public string defaultDatabasePath { get; set; } = "F:\\db\\";
+        public string defaultDatabasePath { get; set; } = "\\db\\";
         public string userDatabaseFile { get; set; }
         public string defaultDatabasePathSuffix { get; set; } = ";Version=3";
         public async Task<List<UserModel>> GetUserList()
         {
             _users = await _userData.GetUsers();
             return _users;
-        }
-        public List<CharacterModel> GetUsersCharacterList(UserModel u)
-        {
-            usersCharacters = u.Characters;
-            return usersCharacters;
         }
         public CharacterModel LoadCharacter(CharacterModel character)
         {
@@ -50,6 +48,7 @@ namespace ESOCompanion.Data
         {
             loadedUser = null;
             loadedUser = new UserModel();
+            loadedUser.userName = "";
             //usersCharacters = new List<CharacterModel>();
             //loadedCharacter = new CharacterModel();
             //loadedCharacterStyles = new List<StyleModel>();

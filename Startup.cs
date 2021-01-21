@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace ESOCompanion
 {
@@ -29,12 +30,13 @@ namespace ESOCompanion
             //services.AddSingleton<WeatherForecastService>();
             //services.AddTransient<ISQLDataAccess, SQLDataAccess>();
             services.AddTransient<ISQLiteDataAccess, SQLiteDataAccess>();
+            services.AddTransient<IUserData, UserData>();
             services.AddTransient<ICharacterData, CharacterData>();
             services.AddTransient<IStyleData, StyleData>();
-            services.AddTransient<IUserData, UserData>();
             services.AddTransient<ESOScraper.Scraper>();
             services.AddTransient<AppData>();
             services.AddTransient<AccountManager>();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

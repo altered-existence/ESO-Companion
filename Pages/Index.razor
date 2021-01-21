@@ -1,5 +1,13 @@
 ﻿@page "/"
 
+@using ESOCompanion.Data
+@inject AppData app
+@using DataAccessLibrary.SQLite
+@using DataAccessLibrary.Models
+@inject ICharacterData characterDB
+@inject IUserData userDB
+@inject IStyleData stylesDB
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <h1 style="text-align:center;"><img class="float-left" src="img/icon.png" width="64" height="64" />ESO Companion</h1>
 <p>Track your ESO Characters and Styles/Motifs</p>
 <div class="container">
@@ -15,6 +23,102 @@
         </ul>
     </div>
 </div>
-@code{
+<button @onclick="LogUsername">Log username</button>
 
+@if (state.User.Identity.IsAuthenticated)
+{
+    <p>@_authMessage</p>
+}
+@if (users is null)
+{
+
+}
+else
+{
+    @foreach (var user in users)
+    {
+        <div class="container" onclick="app.LoadUser(@user)">
+            <div class="row"><span>@user.userName</span></div>
+        </div>
+    }
+}
+@if (userLoaded)
+{
+    @if (characters is null)
+    {
+
+    }
+    else
+    {
+
+        @foreach (var character in characters)
+        {
+            <div class="container" onclick="LoadCharacter(@character.ID)">
+
+                <div class="row"><span>@character.charName</span></div>
+                <div class="row"><span>@character.charLevel.ToString()</span></div>
+                <div class="row"><span>@character.charRace</span></div>
+                <div class="row"><span>@character.charClass</span></div>
+
+            </div>
+        }
+
+    }
+}
+@code{
+    public List<UserModel> users;
+    public List<CharacterModel> characters;
+    public List<StyleModel> styles;
+    public bool userLoaded = false;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    AuthenticationState state;
+    private string _authMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(AppData.loadedUser == null)
+        {
+            AppData.UnloadUser();
+        }
+        state = await GetAuthState();
+        AppData.role = AppData.loadedUser.role;
+    }
+    public async Task GetUserList()
+    {
+        users = await userDB.GetUsers();
+    }
+    public async Task GetCharacterList()
+    {
+        characters = await characterDB.GetCharacters();
+    }
+    public void OnUserSelected(UserModel user)
+    {
+        //GetCharacterList();
+        userLoaded = true;
+    }
+    private async Task<AuthenticationState> GetAuthState()
+    {
+        await GetUserList();
+        var p = AuthenticationStateProvider as CustomAuthStateProvider;
+        p.LoadUser(AppData.loadedUser.ID.ToString(), AppData.loadedUser.userName);
+        state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        return state;
+    }
+    private async Task LogUsername()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            _authMessage = $"{user.Identity.Name} is authenticated.";
+        }
+        else
+        {
+            _authMessage = "The user is NOT authenticated.";
+        }
+    }
 }

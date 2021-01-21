@@ -21,6 +21,10 @@
             <label class="form-label" for="addonsFolder">Select AddOns Folder</label>
             <input type="file" class="form-control-file" id="addonsFolder">
 
+            <AuthorizeView>
+                <Authorized>
+                    @if (AppData.role == "Admin")
+                    {
             <div class="container align-self-auto" style="padding-bottom:4em">
                 <button class="btn btn-danger" style="padding:2px" @onclick="CreateNewDatabase">Create New Database</button>
             </div>
@@ -28,6 +32,12 @@
             <div class="container align-self-auto" style="padding-bottom:4em">
                 <button class="btn btn-danger" style="padding:2px" @onclick="CleanUserTable">Purge Users</button>
             </div>
+                    }
+                </Authorized>
+                <NotAuthorized>
+
+                </NotAuthorized>
+            </AuthorizeView>
         </form>
     </div>
 </div>

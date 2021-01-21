@@ -1,12 +1,13 @@
-﻿@page "/accountPage"
+﻿@layout LoginLayout
+@page "/accountPage"
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.SQLite
 @using ESOCompanion.Data
 @inject AppData data
-@inject UserData userData
+@inject IUserData userData
 
 <h3>AccountPage</h3>
-@if (users is null)
+@if (!data.isRegistered)
 {
     <AccountRegisterModule />
 }
@@ -15,24 +16,11 @@ else
     <AccountLoginModule />
 }
 @code {
+    public UserModel user = new UserModel();
     public List<UserModel> users;
-    public UserModel user;
+
     protected override async Task OnInitializedAsync()
     {
         users = await userData.GetUsers();
-    }
-    public async Task SearchUsers()
-    {
-        // If user does exist, login, else return
-        if (users.Contains(user))
-        {
-            Console.WriteLine(user.userName + " found!");
-            await userData.SearchForUser(user.userName);
-        }
-        else
-        {
-            Console.WriteLine(user.userName + " not found!");
-            return;
-        }
     }
 }
