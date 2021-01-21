@@ -29,6 +29,11 @@ Under Construction...
         </div>
         <button class="btn btn-primary oi oi-plus" @onclick="Login"> Submit</button>
     </EditForm>
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <span class="oi oi-home" aria-hidden="true"></span> Home
+        </NavLink>
+    </li>
 </div>
 
 @code {
@@ -41,23 +46,31 @@ Under Construction...
     }
     private async Task Login()
     {
-        await SearchUsers(user);
-    }
-    private async Task SearchUsers(UserModel user)
-    {
-        // If user does exist, login, else return
-        if (user.userName != "" && user.userPassword != "")
+        UserModel userCheck = await userData.VerifyPassword(user.userName, user.userPassword);
+        if(userCheck != null)
         {
-            UserModel userCheck = await userData.SearchForUser(user.userName);
-            if (userCheck != null)
-            {
-                AppData.loadedUser = accounts.SearchUsers(userCheck, user);
-            }
+            AppData.loadedUser = userCheck;
         }
         else
         {
-            Console.WriteLine(user.userName + "User name & password required!");
-            return;
+            AppData.UnloadUser();
         }
     }
+    //private async Task SearchUsers(UserModel user)
+    //{
+    //    // If user does exist, login, else return
+    //    if (user.userName != "" && user.userPassword != "")
+    //    {
+    //        UserModel userCheck = await userData.SearchForUser(user.userName);
+    //        if (userCheck != null)
+    //        {
+    //            AppData.loadedUser = await accounts.SearchUsers(user, userCheck);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Console.WriteLine(user.userName + "User name & password required!");
+    //        return;
+    //    }
+    //}
 }

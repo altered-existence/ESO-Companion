@@ -2,11 +2,11 @@
 using DataAccessLibrary.SQLite;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 namespace ESOCompanion.Data
 {
     public class AppData
     {
+        public static string role;
         IUserData userData;
         ICharacterData characterData;
         IStyleData styleData;
@@ -47,6 +47,7 @@ namespace ESOCompanion.Data
         {
             loadedUser = null;
             loadedUser = new UserModel();
+            loadedUser.userName = "";
             //usersCharacters = new List<CharacterModel>();
             //loadedCharacter = new CharacterModel();
             //loadedCharacterStyles = new List<StyleModel>();

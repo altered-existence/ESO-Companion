@@ -7,6 +7,7 @@
 @inject ICharacterData characterDB
 @inject IUserData userDB
 @inject IStyleData stylesDB
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <h1 style="text-align:center;"><img class="float-left" src="img/icon.png" width="64" height="64" />ESO Companion</h1>
 <p>Track your ESO Characters and Styles/Motifs</p>
 <div class="container">
@@ -22,6 +23,12 @@
         </ul>
     </div>
 </div>
+<button @onclick="LogUsername">Log username</button>
+
+@if (state.User.Identity.IsAuthenticated)
+{
+    <p>@_authMessage</p>
+}
 @if (users is null)
 {
 
@@ -63,9 +70,21 @@ else
     public List<CharacterModel> characters;
     public List<StyleModel> styles;
     public bool userLoaded = false;
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    AuthenticationState state;
+    private string _authMessage;
+
     protected override async Task OnInitializedAsync()
     {
-        await GetUserList();
+        if(AppData.loadedUser == null)
+        {
+            AppData.UnloadUser();
+        }
+        state = await GetAuthState();
+        AppData.role = AppData.loadedUser.role;
     }
     public async Task GetUserList()
     {
@@ -77,7 +96,29 @@ else
     }
     public void OnUserSelected(UserModel user)
     {
-        GetCharacterList();
+        //GetCharacterList();
         userLoaded = true;
+    }
+    private async Task<AuthenticationState> GetAuthState()
+    {
+        await GetUserList();
+        var p = AuthenticationStateProvider as CustomAuthStateProvider;
+        p.LoadUser(AppData.loadedUser.ID.ToString(), AppData.loadedUser.userName);
+        state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        return state;
+    }
+    private async Task LogUsername()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            _authMessage = $"{user.Identity.Name} is authenticated.";
+        }
+        else
+        {
+            _authMessage = "The user is NOT authenticated.";
+        }
     }
 }

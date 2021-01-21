@@ -26,7 +26,7 @@
             <div class="input-group-prepend">
                 <span class="input-group" id="userEmail">Email </span>
             </div>
-            <InputText id="userEmail" @bind-Value="user.userEmail" />
+            <InputText id="emailAddress" @bind-Value="user.emailAddress" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -45,13 +45,23 @@
     {
         users = await userData.GetUsers();
     }
-
+    /// <summary>
+    /// Check if user exist in db, if not create new user
+    /// </summary>
+    /// <returns></returns>
     public async Task InsertUser()
     {
+        users = await userData.GetUsers();
         // If user doesn't exist, create it, else return
-        if (!users.Contains(user))
+        var model = await userData.SearchForUser(user.userName);
+        if (model.role == "new")
         {
-            await userData.InsertUser(user);
+            user.role = "Noob";
+            if (!users.Contains(user) || users == null)
+            {
+                await userData.InsertUser(user);
+            }
+            else { return; }
         }
         else { return; }
     }
