@@ -32,7 +32,7 @@ namespace ESOCompanion.Data
         }
         public List<CharacterModel> GetUsersCharacterList(UserModel u)
         {
-            usersCharacters = u.characters;
+            usersCharacters = u.Characters;
             return usersCharacters;
         }
         public CharacterModel LoadCharacter(CharacterModel character)
