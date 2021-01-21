@@ -24,6 +24,10 @@
             <div class="container align-self-auto" style="padding-bottom:4em">
                 <button class="btn btn-danger" style="padding:2px" @onclick="CreateNewDatabase">Create New Database</button>
             </div>
+
+            <div class="container align-self-auto" style="padding-bottom:4em">
+                <button class="btn btn-danger" style="padding:2px" @onclick="CleanUserTable">Purge Users</button>
+            </div>
         </form>
     </div>
 </div>
@@ -40,15 +44,15 @@
     }
     private void CreateNewDatabase()
     {
-        //userData.ClearTable();
+
         characterData.ClearTable();
         styleData.ClearTable();
-        userData.CreateUsersTable();
         characterData.CreateCharactersTable();
         styleData.CreateStylesTable();
     }
-    public void GetTheme()
+    public void CleanUserTable()
     {
-
+        userData.ClearTable();
+        userData.CreateUsersTable();
     }
 }

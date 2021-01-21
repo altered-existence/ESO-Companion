@@ -1,4 +1,5 @@
-﻿@page "/accountRegisterPage"
+﻿@layout LoginLayout
+@page "/accountRegisterPage"
 @using ESOCompanion.Data
 @using DataAccessLibrary.Services
 @using DataAccessLibrary.SQLite
@@ -44,19 +45,14 @@
     {
         users = await userData.GetUsers();
     }
-    private async Task UpdateUserEntries()
-    {
-        foreach (var user in users)
-        {
-            await userData.InsertUser(user);
-        }
-    }
 
-    private async Task InsertUser()
+    public async Task InsertUser()
     {
         // If user doesn't exist, create it, else return
         if (!users.Contains(user))
-        { await userData.InsertUser(user); }
+        {
+            await userData.InsertUser(user);
+        }
         else { return; }
     }
 }

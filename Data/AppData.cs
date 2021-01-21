@@ -46,13 +46,14 @@ namespace ESOCompanion.Data
             return loadedCharacterStyles;
         }
         #region Experimental
-        public void UnloadUser()
+        public static void UnloadUser()
         {
+            loadedUser = null;
             loadedUser = new UserModel();
-            usersCharacters = new List<CharacterModel>();
-            loadedCharacter = new CharacterModel();
-            loadedCharacterStyles = new List<StyleModel>();
-            userDatabaseFile = "";
+            //usersCharacters = new List<CharacterModel>();
+            //loadedCharacter = new CharacterModel();
+            //loadedCharacterStyles = new List<StyleModel>();
+            //userDatabaseFile = "";
         }
         #endregion
     }

@@ -1,8 +1,13 @@
-﻿@page "/accountLoginPage"
 
+﻿@layout LoginLayout
+@page "/accountLoginPage"
+@using ESOCompanion.Data
+
+@using DataAccessLibrary.Services
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
 @using ESOCompanion.Data
+@inject AccountManager accounts
 @inject IUserData userData
 
 
@@ -25,8 +30,8 @@
             </div>
             <InputText id="userPassword" @bind-Value="user.userPassword" />
         </div>
-
-        <button class="btn btn-primary oi oi-plus" @onclick="SearchUsers"> Submit</button>
+        <button class="btn btn-primary oi oi-plus" @onclick="Login"> Login</button>
+        <button class="btn btn-primary oi oi-plus" @onclick="SearchUsers"> Search</button>
     </EditForm>
 </div>
 
@@ -38,7 +43,11 @@
     {
         users = await userData.GetUsers();
     }
-    private async Task SearchUsers()
+    private async Task Login()
+    {
+        await SearchUsers(user);
+    }
+    private async Task SearchUsers(UserModel user)
     {
         // If user does exist, login, else return
         if (user.userName != "" && user.userPassword != "")
@@ -46,33 +55,13 @@
             UserModel userCheck = await userData.SearchForUser(user.userName);
             if (userCheck != null)
             {
-                VerifyUserPassword(userCheck);
+                AppData.loadedUser = accounts.SearchUsers(userCheck, user);
             }
         }
         else
         {
-            Console.WriteLine(user.userName + " not found!");
+            Console.WriteLine(user.userName + "User name & password required!");
             return;
-        }
-    }
-    private void VerifyUserPassword(UserModel userCheck)
-    {
-        if (user.userName == userCheck.userName)
-        {
-            if (userCheck.userPassword == user.userPassword)
-            {
-                AppData.loadedUser = userCheck;
-                Console.WriteLine(AppData.loadedUser.userName + " success!");
-            }
-            else
-            {
-                Console.WriteLine(user.userName + " Password doesn't match!");
-                return;
-            }
-        }
-        else
-        {
-            Console.WriteLine(user.userName + "User not found!");
         }
     }
 }
