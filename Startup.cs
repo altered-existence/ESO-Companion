@@ -30,9 +30,9 @@ namespace ESOCompanion
             //services.AddSingleton<WeatherForecastService>();
             //services.AddTransient<ISQLDataAccess, SQLDataAccess>();
             services.AddTransient<ISQLiteDataAccess, SQLiteDataAccess>();
+            services.AddTransient<IUserData, UserData>();
             services.AddTransient<ICharacterData, CharacterData>();
             services.AddTransient<IStyleData, StyleData>();
-            services.AddTransient<IUserData, UserData>();
             services.AddTransient<ESOScraper.Scraper>();
             services.AddTransient<AppData>();
             services.AddTransient<AccountManager>();

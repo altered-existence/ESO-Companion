@@ -7,9 +7,15 @@ namespace ESOCompanion.Data
     public class AppData
     {
         public static string role;
-        IUserData userData;
-        ICharacterData characterData;
-        IStyleData styleData;
+        private readonly IUserData _userData;
+        //private readonly ICharacterData _characterData;
+        //private readonly IStyleData _styleData;
+        public AppData(IUserData userData/*, ICharacterData characterData, IStyleData styleData*/)
+        {
+            _userData = userData;
+            //_characterData = characterData;
+            //_styleData = styleData;
+        }
         private List<UserModel> _users { get; set; }
         public static UserModel loadedUser { get; set; }
         public List<CharacterModel> usersCharacters { get; set; }
@@ -26,11 +32,11 @@ namespace ESOCompanion.Data
             _users = await _userData.GetUsers();
             return _users;
         }
-        public List<CharacterModel> GetUsersCharacterList(UserModel u)
-        {
-            usersCharacters = u.characters;
-            return usersCharacters;
-        }
+        //public List<CharacterModel> GetUsersCharacterList(UserModel u)
+        //{
+        //    usersCharacters = u.characters;
+        //    return usersCharacters;
+        //}
         public CharacterModel LoadCharacter(CharacterModel character)
         {
             loadedCharacter = character;

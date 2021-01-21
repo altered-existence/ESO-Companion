@@ -13,13 +13,13 @@
 </div>
 
 <div class="main">
-    <div class="top-row px-3">
+    <div class="border-top-0 px-3">
         <AuthorizeView>
             <Authorized>
                 <a href="/" @onclick="(() => Logout())">Logout</a>
             </Authorized>
             <NotAuthorized>
-                <a href="/accountLoginPage">Login</a>
+                <a href="/accountPage">Login</a>
             </NotAuthorized>
         </AuthorizeView>
     </div>
