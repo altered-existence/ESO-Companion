@@ -20,7 +20,7 @@ namespace ESOCompanion.Data
         private List<UserModel> _users { get; set; }
         public static UserModel loadedUser { get; set; }
         public List<CharacterModel> usersCharacters { get; set; }
-        public CharacterModel loadedCharacter { get; set; }
+        public static CharacterModel loadedCharacter { get; set; }
         public List<StyleModel> loadedCharacterStyles { get; set; }
         public bool isAdminLoggedIn { get; set; }
         public bool isRegistered { get; set; }

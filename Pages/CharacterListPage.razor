@@ -1,6 +1,8 @@
 ﻿@page "/characterListPage"
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
+@using ESOCompanion.Data
+@inject AppData app
 @inject ICharacterData _db
 
 @inject IUserData userData
@@ -49,7 +51,7 @@ else
     public List<CharacterModel> characters;
     protected override async Task OnInitializedAsync()
     {
-        characters = await _db.GetCharacters();
+        characters = await _db.GetCharacters(AppData.loadedUser);
     }
     private async Task UpdateCharacterEntries()
     {
