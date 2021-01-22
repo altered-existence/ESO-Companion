@@ -83,6 +83,10 @@ else
         {
             AppData.UnloadUser();
         }
+        else
+        {
+            await OnUserSelected(AppData.loadedUser);
+        }
         state = await GetAuthState();
         AppData.role = AppData.loadedUser.role;
     }
@@ -90,14 +94,21 @@ else
     {
         users = await userDB.GetUsers();
     }
-    public async Task GetCharacterList()
+    public async Task OnUserSelected(UserModel user)
     {
-        characters = await characterDB.GetCharacters();
+        userLoaded = await GetCharacterList();
     }
-    public void OnUserSelected(UserModel user)
+    private async Task<bool> GetCharacterList()
     {
-        //GetCharacterList();
-        userLoaded = true;
+        if (characterDB.GetCharacters(AppData.loadedUser).IsCompletedSuccessfully)
+        {
+            characters = await characterDB.GetCharacters(AppData.loadedUser);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     private async Task<AuthenticationState> GetAuthState()
     {
