@@ -1,19 +1,12 @@
 ﻿@using System
 <div class="text-center p-4">
     <div class="align-self-center" style="padding:4px;border:outset thick 8px">
-        <span class="oi oi-clock" aria-hidden="true">  @time</span>
+        <span class="oi oi-clock" aria-hidden="true">  @System.DateTime.Now.ToShortTimeString()</span>
     </div>
     <div class="align-self-center" style="padding:4px;border:outset thick 8px">
-        <span class="oi oi-calendar" aria-hidden="true">  @date</span>
+        <span class="oi oi-calendar" aria-hidden="true">  @System.DateTime.Now.ToShortDateString()</span>
     </div>
 </div>
 @code {
-    public string time;
-    public string date;
-    protected override Task OnInitializedAsync()
-    {
-        time = System.DateTime.Now.ToShortTimeString();
-        date = System.DateTime.Now.ToShortDateString();
-        return base.OnInitializedAsync();
-    }
+
 }
