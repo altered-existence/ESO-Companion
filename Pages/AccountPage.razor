@@ -1,20 +1,43 @@
-﻿@layout LoginLayout
+@layout LoginLayout
 @page "/accountPage"
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.SQLite
 @using ESOCompanion.Data
 @inject AppData data
 @inject IUserData userData
+@inject NavigationManager NavigationManager
 
 <h3>AccountPage</h3>
 @if (!data.isRegistered)
 {
-    <AccountRegisterModule />
+    <h3>Loading...</h3>
 }
 else
 {
-    <AccountLoginModule />
+    <h3>Users</h3>
+    <div class="container">
+        <table class="table table-active table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>User Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in users)
+                {
+                    <tr>
+                        <td>@user.ID</td>
+                        <td>@user.userName</td>
+                        <td>@user.userEmail</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
+
 @code {
     public UserModel user = new UserModel();
     public List<UserModel> users;

@@ -27,8 +27,6 @@ namespace ESOCompanion
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            //services.AddSingleton<WeatherForecastService>();
-            //services.AddTransient<ISQLDataAccess, SQLDataAccess>();
             services.AddTransient<ISQLiteDataAccess, SQLiteDataAccess>();
             services.AddTransient<IUserData, UserData>();
             services.AddTransient<ICharacterData, CharacterData>();
