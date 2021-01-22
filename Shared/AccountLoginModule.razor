@@ -1,13 +1,13 @@
 ﻿@using ESOCompanion.Pages
+@using ESOCompanion.Data
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.SQLite
-
-@inject UserData userData
-
+@inject AppData appData
+@inject IUserData userData
 
 <div class="container align-items-center">
     <div class="align-content-center">
-        <img src="~/img/icon.png" width="64" height="64"/>
+        <img src="~/img/icon.png" width="64" height="64" />
     </div>
     <h3>Login</h3>
     <EditForm Model="@userData" OnValidSubmit="@accPage.SearchUsers">
