@@ -1,38 +1,55 @@
-﻿@using ESOCompanion.Pages
+@using ESOCompanion.Pages
 @using ESOCompanion.Data
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.SQLite
 @inject AppData appData
 @inject IUserData userData
 
+<h1 class="oi oi-circle-check"> Account Login Page</h1>
+<h1 class="text-center">Welcome Back User</h1>
 <div class="container align-items-center">
-    <div class="align-content-center">
-        <img src="~/img/icon.png" width="64" height="64" />
-    </div>
-    <h3>Login</h3>
-    <EditForm Model="@userData" OnValidSubmit="@accPage.SearchUsers">
+    <EditForm Model="@userData" OnValidSubmit="@Login">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="userName">User Name </span>
             </div>
-            <InputText id="userName" @bind-Value="accPage.user.userName" />
+            <InputText id="userName" @bind-Value="user.userName" />
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="userPassword">Password </span>
             </div>
-            <InputText id="userPassword" @bind-Value="accPage.user.userPassword" />
+            <InputText id="userPassword" @bind-Value="user.userPassword" />
         </div>
-        <button class="btn btn-primary oi oi-plus" @onclick="accPage.SearchUsers"> Submit</button>
-        <div class="align-content-center">
-            <p>Don't have an account?</p>
-            <button class="btn btn-primary oi-plus"> Register</button>
-        </div>
+        <button class="btn btn-primary oi oi-plus" @onclick="Login"> Login</button>
     </EditForm>
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <span class="oi oi-home" aria-hidden="true"></span> Home
+        </NavLink>
+    </li>
 </div>
 @code {
-    AccountPage accPage;
+    public UserModel user = new UserModel();
+    public List<UserModel> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userData.GetUsers();
+    }
+    public async Task Login()
+    {
+        UserModel userCheck = await userData.VerifyPassword(user.userName, user.userPassword);
+        if (userCheck != null)
+        {
+            AppData.loadedUser = userCheck;
+        }
+        else
+        {
+            AppData.UnloadUser();
+        }
+    }
 }

@@ -1,38 +1,60 @@
-﻿@using ESOCompanion.Pages
+@using ESOCompanion.Pages
 @using ESOCompanion.Data
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.SQLite
-@inject AppData appData
+@inject AppData data
 @inject IUserData userData
 
 <h3>Register</h3>
 
 <div class="container align-items-center">
-    <EditForm Model="@userData" OnValidSubmit="@accPage.SearchUsers">
+    <EditForm Model="@userData" OnValidSubmit="@InsertUser">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="userEmail">Email </span>
             </div>
-            <InputText id="userEmail" @bind-Value="accPage.user.userName" />
+            <InputText id="userEmail" @bind-Value="user.userName" />
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="userName">User Name </span>
             </div>
-            <InputText id="userName" @bind-Value="accPage.user.userName" />
+            <InputText id="userName" @bind-Value="user.userName" />
         </div>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="userPassword">Password </span>
             </div>
-            <InputText id="userPassword" @bind-Value="accPage.user.userPassword" />
+            <InputText id="userPassword" @bind-Value="user.userPassword" />
         </div>
-        <button class="btn btn-primary oi oi-plus" @onclick="accPage.SearchUsers"> Submit</button>
+        <button class="btn btn-primary oi oi-plus" @onclick="InsertUser"> Submit</button>
     </EditForm>
 </div>
 @code {
-    AccountPage accPage;
+    public UserModel user = new UserModel();
+    public List<UserModel> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userData.GetUsers();
+    }
+    private async Task InsertUser()
+    {
+        users = await userData.GetUsers();
+        // If user doesn't exist, create it, else return
+        var model = await userData.SearchForUser(user.userName);
+        if (model.role == "new")
+        {
+            user.role = "Noob";
+            if (!users.Contains(user) || users == null)
+            {
+                await userData.InsertUser(user);
+            }
+            else { return; }
+        }
+        else { return; }
+    }
 }

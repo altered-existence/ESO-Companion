@@ -1,6 +1,11 @@
 ﻿@inherits LayoutComponentBase
 @using ESOCompanion
 @using ESOCompanion.Data
+@using DataAccessLibrary.Services
+@using DataAccessLibrary.SQLite
+@using DataAccessLibrary.Models
+@inject AccountManager accounts
+@inject IUserData userData
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="sidebar">
@@ -8,26 +13,51 @@
 </div>
 
 <div class="main">
-    <div class="top-row px-4">
+    <div class="border-top-0 px-3">
         <AuthorizeView>
             <Authorized>
-                <a href="/" @onclick="(() => Logout())">Logout</a>
+                <a href="/accountPage" @onclick="(() => Logout())">Logout</a>
             </Authorized>
             <NotAuthorized>
-                <a href="/accountLoginPage">Login</a>
+                <a href="/accountPage">Login</a>
             </NotAuthorized>
         </AuthorizeView>
     </div>
 
     <div class="content px-4">
+
+        @if (AppData.role == "Noob")
+        {
+            <p>@_name</p>
+        }
         @Body
     </div>
     <Footer />
 </div>
 
 @code {
+
+    string _name;
+    UserModel user = new UserModel();
+    public List<UserModel> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userData.GetUsers();
+        CheckLoadedUser();
+    }
     public void Logout()
     {
         AppData.UnloadUser();
+    }
+    public void CheckLoadedUser()
+    {
+        if (AppData.loadedUser != null)
+        {
+            if (accounts.isRegistered(AppData.loadedUser.emailAddress))
+            {
+                _name = AppData.loadedUser.userName;
+            }
+        }
     }
 }

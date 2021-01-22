@@ -6,8 +6,6 @@
 @using DataAccessLibrary.Models
 @inject AccountManager accounts
 @inject IUserData userData
-
-
 <h1 class="oi oi-circle-check"> Account Login Page</h1>
 <h1 class="text-center">Welcome Back User</h1>
 <div class="container align-items-center">
@@ -29,6 +27,11 @@
         </div>
         <button class="btn btn-primary oi oi-plus" @onclick="Login"> Login</button>
     </EditForm>
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <span class="oi oi-home" aria-hidden="true"></span> Home
+        </NavLink>
+    </li>
 </div>
 
 @code {
@@ -41,23 +44,14 @@
     }
     private async Task Login()
     {
-        await SearchUsers(user);
-    }
-    private async Task SearchUsers(UserModel user)
-    {
-        // If user does exist, login, else return
-        if (user.userName != "" && user.userPassword != "")
+        UserModel userCheck = await userData.VerifyPassword(user.userName, user.userPassword);
+        if(userCheck != null)
         {
-            UserModel userCheck = await userData.SearchForUser(user.userName);
-            if (userCheck != null)
-            {
-                AppData.loadedUser = accounts.SearchUsers(userCheck, user);
-            }
+            AppData.loadedUser = userCheck;
         }
         else
         {
-            Console.WriteLine(user.userName + "User name & password required!");
-            return;
+            AppData.UnloadUser();
         }
     }
 }
