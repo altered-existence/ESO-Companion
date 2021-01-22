@@ -8,14 +8,16 @@ namespace ESOCompanion.Data
     {
         public static string role;
         private readonly IUserData _userData;
-        //private readonly ICharacterData _characterData;
-        //private readonly IStyleData _styleData;
-        public AppData(IUserData userData/*, ICharacterData characterData, IStyleData styleData*/, bool isRegistered = false)
+        private readonly ISQLiteDataAccess _companionDB;
+        private readonly ICharacterData _characterData;
+        private readonly IStyleData _styleData;
+        public AppData(IUserData userData, ISQLiteDataAccess companionDB, ICharacterData characterData, IStyleData styleData, bool isRegistered = false)
         {
             _userData = userData;
+            _companionDB = companionDB;
             this.isRegistered = isRegistered;
-            //_characterData = characterData;
-            //_styleData = styleData;
+            _characterData = characterData;
+            _styleData = styleData;
         }
         private List<UserModel> _users { get; set; }
         public static UserModel loadedUser { get; set; }
@@ -53,6 +55,16 @@ namespace ESOCompanion.Data
             //loadedCharacter = new CharacterModel();
             //loadedCharacterStyles = new List<StyleModel>();
             //userDatabaseFile = "";
+        }
+        public async Task CheckForFirstTimeUse()
+        {
+            if (_companionDB.CreateDatabaseAndTable(_companionDB.connectionString))
+            {
+                await _userData.CreateDefaultUser();
+                await _characterData.CreateCharactersTable();
+                await _characterData.CreateDefaultCharacter();
+                await _styleData.CreateStylesTable();
+            }
         }
         #endregion
     }
