@@ -4,6 +4,7 @@
 @inject AppData app
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
+@inject ISQLiteDataAccess companionDB
 @inject ICharacterData characterDB
 @inject IUserData userDB
 @inject IStyleData stylesDB
@@ -53,7 +54,7 @@ else
 
         @foreach (var character in characters)
         {
-            <div class="container" onclick="LoadCharacter(@character.ID)">
+            <div class="container" onclick="app.LoadCharacter(@character)">
 
                 <div class="row"><span>@character.charName</span></div>
                 <div class="row"><span>@character.charLevel.ToString()</span></div>
@@ -79,7 +80,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        if(AppData.loadedUser == null)
+        if (AppData.loadedUser == null)
         {
             AppData.UnloadUser();
         }

@@ -4,8 +4,12 @@
 @using DataAccessLibrary.Services
 @using DataAccessLibrary.SQLite
 @using DataAccessLibrary.Models
+@inject ISQLiteDataAccess companionDB
 @inject AccountManager accounts
+@inject ICharacterData characterData
+@inject IStyleData styleData
 @inject IUserData userData
+@inject AppData appData
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="sidebar">
@@ -43,6 +47,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await appData.CheckForFirstTimeUse();
         users = await userData.GetUsers();
         CheckLoadedUser();
     }
