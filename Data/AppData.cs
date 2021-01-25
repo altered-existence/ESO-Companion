@@ -1,5 +1,6 @@
 ﻿using DataAccessLibrary.Models;
 using DataAccessLibrary.SQLite;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace ESOCompanion.Data
@@ -19,6 +20,7 @@ namespace ESOCompanion.Data
             _characterData = characterData;
             _styleData = styleData;
         }
+        public DataFileModel DataFile { get; set; }
         private List<UserModel> _users { get; set; }
         public static UserModel loadedUser { get; set; }
         public List<CharacterModel> usersCharacters { get; set; }
@@ -28,8 +30,8 @@ namespace ESOCompanion.Data
         public bool isRegistered { get; set; }
         public bool isLoggedIn { get; set; }
         public string defaultDatabasePath { get; set; } = "\\db\\";
-        public string userDatabaseFile { get; set; }
-        public string defaultDatabasePathSuffix { get; set; } = ";Version=3";
+        public string userDatabaseFile { get; set; } = "";
+        public static string defaultDatabasePathSuffix { get; set; } = ".db;Version=3;";
         public async Task<List<UserModel>> GetUserList()
         {
             _users = await _userData.GetUsers();
@@ -48,22 +50,29 @@ namespace ESOCompanion.Data
         #region Experimental
         public static void UnloadUser()
         {
-            loadedUser = null;
-            loadedUser = new UserModel();
-            loadedUser.userName = "";
-            //usersCharacters = new List<CharacterModel>();
-            //loadedCharacter = new CharacterModel();
-            //loadedCharacterStyles = new List<StyleModel>();
-            //userDatabaseFile = "";
+            loadedUser = new UserModel
+            {
+                emailAddress = "",
+                userName = "new",
+                role = "new",
+                userPassword = "password"
+            };
         }
         public async Task CheckForFirstTimeUse()
         {
-            if (_companionDB.CreateDatabaseAndTable(_companionDB.connectionString))
+            // ----------------------------------------------------------
+            // Further logic needed for: once path is received from user
+            // ----------------------------------------------------------
+            Console.WriteLine(_companionDB.connectionString);
+            if (_companionDB.CreateDatabaseAndTable(_companionDB.UserConnectionString, false))
             {
-                await _userData.CreateDefaultUser();
-                await _characterData.CreateCharactersTable();
-                await _characterData.CreateDefaultCharacter();
-                await _styleData.CreateStylesTable();
+                if (!_userData.CreateUsersTable().IsFaulted)
+                {
+                    await _userData.CreateDefaultUser();
+                    await _characterData.CreateCharactersTable();
+                    await _characterData.CreateDefaultCharacter();
+                    await _styleData.CreateStylesTable();
+                }
             }
         }
         #endregion
