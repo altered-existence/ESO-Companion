@@ -42,13 +42,21 @@
 @code {
 
     string _name;
+    static string path;
+    static string fileName;
     UserModel user = new UserModel();
     public List<UserModel> users;
+    DataFileModel dataFile = new DataFileModel(path, fileName);
 
     protected override async Task OnInitializedAsync()
     {
-        await appData.CheckForFirstTimeUse();
-        users = await userData.GetUsers();
+        path = appData.defaultDatabasePath;
+        fileName = appData.userDatabaseFile;
+        //await appData.CheckForFirstTimeUse();
+        if (!appData.CheckForFirstTimeUse().IsFaulted)
+        {
+            users = await userData.GetUsers();
+        }
         CheckLoadedUser();
     }
     public void Logout()
