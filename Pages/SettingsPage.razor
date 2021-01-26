@@ -4,7 +4,7 @@
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.Utilities
 @using DataAccessLibrary.SQLite
-
+@*@using System.IO.FileSystemInfo*@ 
 @inject ISQLiteDataAccess companionDB
 @inject IUserData userData
 @inject ICharacterData characterData
@@ -13,44 +13,48 @@
 
 <div class="container col-10">
     <div class="form-group">
+
         @*<form>
-                <label class="form-label" for="toggleTheme">Toggle Theme:</label>
-                <input type="checkbox" class="form-control-file" id="toggleTheme">
+            <label class="form-label" for="toggleTheme">Toggle Theme:</label>
+            <input type="checkbox" class="form-control-file" id="toggleTheme">
 
-                <label class="form-label" for="databaseFile">Select Database File</label>
-                <input type="file" class="form-control-file" id="databaseFile" >
+            <label class="form-label" for="databaseFile">Select Database File</label>
+            <input type="file" class="form-control-file" id="databaseFile" @bind-value="path">
 
-                <label class="form-label" for="addonsFolder">Select AddOns Folder</label>
-                <input type="file" class="form-control-file" id="addonsFolder">
+            <label class="form-label" for="addonsFolder">Select AddOns Folder</label>
+            <input type="file" class="form-control-file" id="addonsFolder">
 
-                <AuthorizeView>
-                    <Authorized>
-                        @if (AppData.Role == "Admin")
-                        {
-                            <div class="container align-self-auto" style="padding-bottom:4em">
-                                <button class="btn btn-danger" style="padding:2px" @onclick="CleanDatabase">Clean Database</button>
-                            </div>
+            <AuthorizeView>
+                <Authorized>
+                    @if (AppData.Role == "Admin")
+                    {
+                        <div class="container align-self-auto" style="padding-bottom:4em">
+                            <button class="btn btn-danger" style="padding:2px" @onclick="CleanDatabase">Clean Database</button>
+                        </div>
 
-                            <div class="container align-self-auto" style="padding-bottom:4em">
-                                <button class="btn btn-danger" style="padding:2px" @onclick="CleanUserTable">Purge Users</button>
-                            </div>
-                        }
-                        else if (AppData.Role == null)
-                        {
-                            <div class="container align-self-auto" style="padding-bottom:4em">
-                                <button class="btn btn-danger" style="padding:2px" @onclick="CreateNewDatabase">Create New Database</button>
-                            </div>
-                        }
-                    </Authorized>
-                    <NotAuthorized>
+                        <div class="container align-self-auto" style="padding-bottom:4em">
+                            <button class="btn btn-danger" style="padding:2px" @onclick="CleanUserTable">Purge Users</button>
+                        </div>
+                    }
+                    else if (AppData.Role == null)
+                    {
+                        <div class="container align-self-auto" style="padding-bottom:4em">
+                            <button class="btn btn-danger" style="padding:2px" @onclick="CreateNewDatabase">Create New Database</button>
+                        </div>
+                    }
+                </Authorized>
+                <NotAuthorized>
 
-                    </NotAuthorized>
-                </AuthorizeView>
-            </form>*@
+                </NotAuthorized>
+            </AuthorizeView>
+        </form>*@
         <EditForm Model="@dataFileModel" OnValidSubmit="@UserDatabaseSelect">
             <DataAnnotationsValidator />
             <ValidationSummary />
-
+            <div>
+                <label class="form-label" for="databaseFile">Select Database File</label>
+                <InputFile id="filePath"  />
+            </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="path">Database Directory </span>
@@ -71,6 +75,7 @@
 </div>
 
 @code {
+    static string filePath;
     static string path;
     static string fileName;
     DataFileModel dataFileModel = new DataFileModel(path, fileName);

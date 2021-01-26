@@ -63,7 +63,7 @@ namespace ESOCompanion.Data
             // ----------------------------------------------------------
             // Further logic needed for: once path is received from user
             // ----------------------------------------------------------
-            Console.WriteLine(_companionDB.connectionString);
+            Console.WriteLine(_companionDB.UserConnectionString);
             if (_companionDB.CreateDatabaseAndTable(_companionDB.UserConnectionString, false))
             {
                 if (!_userData.CreateUsersTable().IsFaulted)
