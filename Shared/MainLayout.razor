@@ -53,9 +53,9 @@
         path = appData.defaultDatabasePath;
         fileName = appData.userDatabaseFile;
         //await appData.CheckForFirstTimeUse();
-        if (!appData.CheckForFirstTimeUse().IsFaulted)
+        if (appData.CheckForFirstTimeUse().IsCompletedSuccessfully)
         {
-            users = await userData.GetUsers();
+            //users = await userData.GetUsers();
         }
         CheckLoadedUser();
     }
