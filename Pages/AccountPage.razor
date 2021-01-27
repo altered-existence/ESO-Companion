@@ -54,6 +54,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        users = await userData.GetUsers();
+        if (user != null)
+        {
+            if (userData.GetUsers().IsCompletedSuccessfully)
+            {
+                users = await userData.GetUsers();
+            }
+        }
     }
 }

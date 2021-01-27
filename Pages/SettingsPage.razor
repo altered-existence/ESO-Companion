@@ -91,13 +91,14 @@
     {
         app.DataFile = dataFileModel;
         onDatabaseFileSelect();
-        companionDB.CreateDatabaseAndTable(companionDB.UserConnectionString + path + fileName + AppData.defaultDatabasePathSuffix, true);
+        companionDB.CreateDatabaseAndTable(companionDB.UserConnectionString + filePath + AppData.defaultDatabasePathSuffix, true);
 
     }
     private void onDatabaseFileSelect()
     {
         path = dataFileModel.Path;
         fileName = dataFileModel.FileName;
+        filePath = path + fileName;
     }
     private void CleanDatabase()
     {
