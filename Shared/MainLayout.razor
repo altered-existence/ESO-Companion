@@ -50,8 +50,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        path = appData.defaultDatabasePath;
-        fileName = appData.userDatabaseFile;
+        appData.DataFile = dataFile;
+        path = AppData.definedDatabasePath;
+        fileName = AppData.userDatabaseFile;
         //await appData.CheckForFirstTimeUse();
         if (appData.CheckForFirstTimeUse().IsCompletedSuccessfully)
         {

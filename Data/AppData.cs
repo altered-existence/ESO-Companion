@@ -29,8 +29,9 @@ namespace ESOCompanion.Data
         public bool isAdminLoggedIn { get; set; }
         public bool isRegistered { get; set; }
         public bool isLoggedIn { get; set; }
-        public string defaultDatabasePath { get; set; } = "\\db\\";
-        public string userDatabaseFile { get; set; } = "";
+        public static string defaultDatabasePath { get; set; } = "\\db\\";
+        public static string definedDatabasePath { get; set; } = defaultDatabasePath;
+        public static string userDatabaseFile { get; set; } = "";
         public static string defaultDatabasePathSuffix { get; set; } = ".db;Version=3;";
         public async Task<List<UserModel>> GetUserList()
         {
@@ -61,8 +62,10 @@ namespace ESOCompanion.Data
         public async Task CheckForFirstTimeUse()
         {
             // ----------------------------------------------------------
-            // Further logic needed for: once path is received from user
+            // Further logic needed...
             // ----------------------------------------------------------
+            definedDatabasePath = DataFile.Path;
+            userDatabaseFile = DataFile.FileName;
             Console.WriteLine(_companionDB.UserConnectionString);
             if (_companionDB.CreateDatabaseAndTable(_companionDB.UserConnectionString, false))
             {
