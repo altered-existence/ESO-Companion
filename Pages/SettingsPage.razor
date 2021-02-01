@@ -89,7 +89,6 @@
     }
     private void UserDatabaseSelect()
     {
-        app.DataFile = dataFileModel;
         onDatabaseFileSelect();
         companionDB.CreateDatabaseAndTable(companionDB.UserConnectionString + filePath + AppData.defaultDatabasePathSuffix, true);
 
@@ -99,6 +98,7 @@
         path = dataFileModel.Path;
         fileName = dataFileModel.FileName;
         filePath = path + fileName;
+        app.DataFile = dataFileModel;
     }
     private void CleanDatabase()
     {

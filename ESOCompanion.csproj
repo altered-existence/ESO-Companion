@@ -13,4 +13,10 @@
   <ItemGroup>
     <Folder Include="Components\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.2" />
+    <PackageReference Include="Radzen.Blazor" Version="3.0.3" />
+  </ItemGroup>
 </Project>
