@@ -74,6 +74,7 @@ namespace ESOCompanion.Data
                     await _userData.CreateDefaultUser();
                     await _characterData.CreateCharactersTable();
                     await _characterData.CreateDefaultCharacter();
+                    await _characterData.CreateUsersCharactersView();
                     await _styleData.CreateStylesTable();
                 }
             }

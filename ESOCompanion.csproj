@@ -15,11 +15,9 @@
     <Folder Include="Components\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Radzen.Blazor" Version="3.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.2" />
+    <PackageReference Include="Radzen.Blazor" Version="3.0.3" />
   </ItemGroup>
 </Project>
