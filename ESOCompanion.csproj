@@ -7,6 +7,7 @@
     <UpgradeBackupLocation>S:\GithubProjects\Altx\ESO-Companion\Backup\</UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <StartupObject>ESOCompanion.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLibrary\DataAccessLibrary.csproj" />
