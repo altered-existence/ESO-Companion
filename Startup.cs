@@ -1,7 +1,7 @@
 //using ESOCompanion.Data;
 using DataAccessLibrary;
 using DataAccessLibrary.Services;
-using DataAccessLibrary.SQLite;
+using DataAccessLibrary.Services.MariaDb;
 using ESOCompanion.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Components.Authorization;
+using ESOCompanion.Data.DBContexts;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using ESOCompanion.Areas.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace ESOCompanion
 {
@@ -25,16 +30,42 @@ namespace ESOCompanion
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            string mySqlUserConnectionStr = Configuration.GetConnectionString("userConn");
+            string mySqlConnectionStr = Configuration.GetConnectionString("conn");
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddTransient<ISQLiteDataAccess, SQLiteDataAccess>();
+            services.AddTransient<IMySqlDataAccess, MySqlDataAccess>();
             services.AddTransient<IUserData, UserData>();
             services.AddTransient<ICharacterData, CharacterData>();
             services.AddTransient<IStyleData, StyleData>();
             services.AddTransient<ESOScraper.Scraper>();
             services.AddTransient<AppData>();
             services.AddTransient<AccountManager>();
-            services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            services.AddDbContextPool<ApplicationDbContext>(options => options.UseMySql(mySqlUserConnectionStr, ServerVersion.AutoDetect(mySqlUserConnectionStr)));
+            //services.AddDbContextPool<DbContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                });
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

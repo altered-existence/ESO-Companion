@@ -3,57 +3,60 @@
 @inject AppData app
 @using DataAccessLibrary.Models
 @using DataAccessLibrary.Utilities
-@using DataAccessLibrary.SQLite
-@*@using System.IO.FileSystemInfo*@ 
-@inject ISQLiteDataAccess companionDB
+@using DataAccessLibrary.Services.MariaDb
+@*@using System.IO.FileSystemInfo*@
+@inject IMySqlDataAccess companionDB
 @inject IUserData userData
 @inject ICharacterData characterData
 @inject IStyleData styleData
+
+@inject NavigationManager NavManager
+
 <h1 class="text-center"><img class="float-left" src="img/icon.png" width="64" height="64">Settings</h1>
 
 <div class="container col-10">
     <div class="form-group">
 
         @*<form>
-            <label class="form-label" for="toggleTheme">Toggle Theme:</label>
-            <input type="checkbox" class="form-control-file" id="toggleTheme">
+                <label class="form-label" for="toggleTheme">Toggle Theme:</label>
+                <input type="checkbox" class="form-control-file" id="toggleTheme">
 
-            <label class="form-label" for="databaseFile">Select Database File</label>
-            <input type="file" class="form-control-file" id="databaseFile" @bind-value="path">
+                <label class="form-label" for="databaseFile">Select Database File</label>
+                <input type="file" class="form-control-file" id="databaseFile" @bind-value="path">
 
-            <label class="form-label" for="addonsFolder">Select AddOns Folder</label>
-            <input type="file" class="form-control-file" id="addonsFolder">
+                <label class="form-label" for="addonsFolder">Select AddOns Folder</label>
+                <input type="file" class="form-control-file" id="addonsFolder">
 
-            <AuthorizeView>
-                <Authorized>
-                    @if (AppData.Role == "Admin")
-                    {
-                        <div class="container align-self-auto" style="padding-bottom:4em">
-                            <button class="btn btn-danger" style="padding:2px" @onclick="CleanDatabase">Clean Database</button>
-                        </div>
+                <AuthorizeView>
+                    <Authorized>
+                        @if (AppData.Role == "Admin")
+                        {
+                            <div class="container align-self-auto" style="padding-bottom:4em">
+                                <button class="btn btn-danger" style="padding:2px" @onclick="CleanDatabase">Clean Database</button>
+                            </div>
 
-                        <div class="container align-self-auto" style="padding-bottom:4em">
-                            <button class="btn btn-danger" style="padding:2px" @onclick="CleanUserTable">Purge Users</button>
-                        </div>
-                    }
-                    else if (AppData.Role == null)
-                    {
-                        <div class="container align-self-auto" style="padding-bottom:4em">
-                            <button class="btn btn-danger" style="padding:2px" @onclick="CreateNewDatabase">Create New Database</button>
-                        </div>
-                    }
-                </Authorized>
-                <NotAuthorized>
+                            <div class="container align-self-auto" style="padding-bottom:4em">
+                                <button class="btn btn-danger" style="padding:2px" @onclick="CleanUserTable">Purge Users</button>
+                            </div>
+                        }
+                        else if (AppData.Role == null)
+                        {
+                            <div class="container align-self-auto" style="padding-bottom:4em">
+                                <button class="btn btn-danger" style="padding:2px" @onclick="CreateNewDatabase">Create New Database</button>
+                            </div>
+                        }
+                    </Authorized>
+                    <NotAuthorized>
 
-                </NotAuthorized>
-            </AuthorizeView>
-        </form>*@
+                    </NotAuthorized>
+                </AuthorizeView>
+            </form>*@
         <EditForm Model="@dataFileModel" OnValidSubmit="@UserDatabaseSelect">
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div>
                 <label class="form-label" for="databaseFile">Select Database File</label>
-                <InputFile id="filePath"  />
+                <InputFile id="filePath" />
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -70,6 +73,9 @@
             <div class="container align-self-auto" style="padding-bottom:4em">
                 <button class="btn btn-danger" style="padding:2px" @onclick="UserDatabaseSelect">Create New Database </button>
             </div>
+            <div class="container align-self-auto" style="padding-bottom:4em">
+                <button class="btn btn-danger" style="padding:2px" @onclick="CleanDatabase">Clean Database </button>
+            </div>
         </EditForm>
     </div>
 </div>
@@ -83,14 +89,11 @@
     {
 
     }
-    private void CreateNewDatabase()
-    {
-        companionDB.CreateDatabaseAndTable(companionDB.connectionString, true);
-    }
+
     private void UserDatabaseSelect()
     {
         onDatabaseFileSelect();
-        companionDB.CreateDatabaseAndTable(companionDB.UserConnectionString + filePath + AppData.defaultDatabasePathSuffix, true);
+        //companionDB.CreateDatabaseAndTable(companionDB.UserConnectionString + filePath + AppData.defaultDatabasePathSuffix, true);
 
     }
     private void onDatabaseFileSelect()
@@ -100,17 +103,32 @@
         filePath = path + fileName;
         app.DataFile = dataFileModel;
     }
+
     private void CleanDatabase()
     {
-
-        characterData.ClearTable();
-        styleData.ClearTable();
-        characterData.CreateCharactersTable();
-        styleData.CreateStylesTable();
+        CleanUserTable();
+        CleanCharacterTable();
+        CleanStylesTable();
+        NavManager.NavigateTo("/");
     }
     public void CleanUserTable()
     {
-        userData.ClearTable();
+        //userData.ClearTable();
         userData.CreateUsersTable();
+        userData.CreateDefaultUser();
+        NavManager.NavigateTo("/");
+    }
+    public void CleanCharacterTable()
+    {
+        //characterData.ClearTable();
+        characterData.CreateCharactersTable();
+        characterData.CreateDefaultCharacter();
+        NavManager.NavigateTo("/charactersListPage");
+    }
+    public void CleanStylesTable()
+    {
+        //styleData.ClearTable();
+        styleData.CreateStylesTable();
+        NavManager.NavigateTo("/stylesListPage");
     }
 }
