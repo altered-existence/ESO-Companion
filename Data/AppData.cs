@@ -1,5 +1,5 @@
 ﻿using DataAccessLibrary.Models;
-using DataAccessLibrary.SQLite;
+using DataAccessLibrary.Services.MariaDb;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,10 +9,10 @@ namespace ESOCompanion.Data
     {
         public static string role;
         private readonly IUserData _userData;
-        private readonly ISQLiteDataAccess _companionDB;
+        private readonly IMySqlDataAccess _companionDB;
         private readonly ICharacterData _characterData;
         private readonly IStyleData _styleData;
-        public AppData(IUserData userData, ISQLiteDataAccess companionDB, ICharacterData characterData, IStyleData styleData, bool isRegistered = false)
+        public AppData(IUserData userData, IMySqlDataAccess companionDB, ICharacterData characterData, IStyleData styleData, bool isRegistered = false)
         {
             _userData = userData;
             _companionDB = companionDB;
@@ -59,25 +59,15 @@ namespace ESOCompanion.Data
                 userPassword = "password"
             };
         }
-        public async Task CheckForFirstTimeUse()
+        public Task CheckForFirstTimeUse()
         {
             // ----------------------------------------------------------
             // Further logic needed...
             // ----------------------------------------------------------
             definedDatabasePath = DataFile.Path;
             userDatabaseFile = DataFile.FileName;
-            Console.WriteLine(_companionDB.UserConnectionString);
-            if (_companionDB.CreateDatabaseAndTable(_companionDB.UserConnectionString, false))
-            {
-                if (!_userData.CreateUsersTable().IsFaulted)
-                {
-                    await _userData.CreateDefaultUser();
-                    await _characterData.CreateCharactersTable();
-                    await _characterData.CreateDefaultCharacter();
-                    await _characterData.CreateUsersCharactersView();
-                    await _styleData.CreateStylesTable();
-                }
-            }
+            //Console.WriteLine(_companionDB.connectionString);
+            return Task.CompletedTask;
         }
         #endregion
     }

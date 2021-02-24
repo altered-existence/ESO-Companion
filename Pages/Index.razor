@@ -2,17 +2,16 @@
 
 @using ESOCompanion.Data
 @inject AppData app
-@using DataAccessLibrary.SQLite
+@using DataAccessLibrary.Services.MariaDb
 @using DataAccessLibrary.Models
-@inject ISQLiteDataAccess companionDB
+@inject IMySqlDataAccess companionDB
 @inject ICharacterData characterDB
 @inject IUserData userDB
 @inject IStyleData stylesDB
-@inject AuthenticationStateProvider AuthenticationStateProvider
+@*@inject AuthenticationStateProvider AuthenticationStateProvider*@
 <h1 style="text-align:center;"><img class="float-left" src="img/icon.png" width="64" height="64" />ESO Companion</h1>
 <p>Track your ESO Characters and Styles/Motifs</p>
 <div class="container">
-    <ClockModule></ClockModule>
     <div class="text-center">
         <ul>
             Use the NavMenu on the left Sidebar to see:
@@ -24,16 +23,23 @@
         </ul>
     </div>
 </div>
-<button @onclick="LogUsername">Log username</button>
+@*<button @onclick="LogUsername">Log username</button>*@
 
 @*/*TEST*/*@
 <br />
 <a href="stylePage">Styles Test</a>
 
-@if (state.User.Identity.IsAuthenticated)
-{
-    <p>@_authMessage</p>
-}
+<AuthorizeView>
+    <Authorized>
+        @_authMessage = @context.User.Identity.Name;
+    </Authorized>
+    <NotAuthorized>
+        @_authMessage;
+    </NotAuthorized>
+</AuthorizeView>
+
+<p>@_authMessage</p>
+
 @if (users is null)
 {
 
@@ -76,11 +82,7 @@ else
     public List<StyleModel> styles;
     public bool userLoaded = false;
 
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
-
-    AuthenticationState state;
-    private string _authMessage;
+    private string _authMessage = "Noob";
 
     protected override async Task OnInitializedAsync()
     {
@@ -92,7 +94,7 @@ else
         {
             await OnUserSelected(AppData.loadedUser);
         }
-        state = await GetAuthState();
+        //state = await GetAuthState();
         AppData.role = AppData.loadedUser.role;
     }
     public async Task GetUserList()
@@ -115,26 +117,26 @@ else
             return false;
         }
     }
-    private async Task<AuthenticationState> GetAuthState()
-    {
-        await GetUserList();
-        var p = AuthenticationStateProvider as CustomAuthStateProvider;
-        p.LoadUser(AppData.loadedUser.ID.ToString(), AppData.loadedUser.userName);
-        state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        return state;
-    }
-    private async Task LogUsername()
-    {
-        var authState = await authenticationStateTask;
-        var user = authState.User;
+    //private async Task<AuthenticationState> GetAuthState()
+    //{
+    //    await GetUserList();
+    //    var p = AuthenticationStateProvider as CustomAuthStateProvider;
+    //    p.LoadUser(AppData.loadedUser.ID.ToString(), AppData.loadedUser.userName);
+    //    state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //    return state;
+    //}
+    //private async Task LogUsername()
+    //{
+    //    //var authState = await authenticationStateTask;
+    //    //var user = authState.User;
 
-        if (user.Identity.IsAuthenticated)
-        {
-            _authMessage = $"{user.Identity.Name} is authenticated.";
-        }
-        else
-        {
-            _authMessage = "The user is NOT authenticated.";
-        }
-    }
+    //    if (Identity.IsAuthenticated)
+    //    {
+    //        _authMessage = $"{user.Identity.Name} is authenticated.";
+    //    }
+    //    else
+    //    {
+    //        _authMessage = "The user is NOT authenticated.";
+    //    }
+    //}
 }

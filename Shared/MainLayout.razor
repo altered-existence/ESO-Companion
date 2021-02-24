@@ -2,9 +2,9 @@
 @using ESOCompanion
 @using ESOCompanion.Data
 @using DataAccessLibrary.Services
-@using DataAccessLibrary.SQLite
+@using DataAccessLibrary.Services.MariaDb
 @using DataAccessLibrary.Models
-@inject ISQLiteDataAccess companionDB
+@inject IMySqlDataAccess companionDB
 @inject AccountManager accounts
 @inject ICharacterData characterData
 @inject IStyleData styleData
@@ -17,23 +17,21 @@
 </div>
 
 <div class="main">
+    <AuthorizeView>
+        <Authorized>
+            @_name = @context.User.Identity.Name;
+        </Authorized>
+        <NotAuthorized>
+            @_name = "Noob";
+        </NotAuthorized>
+    </AuthorizeView>
     <div class="border-top-0 px-3">
-        <AuthorizeView>
-            <Authorized>
-                <a href="/accountPage" @onclick="(() => Logout())">Logout</a>
-            </Authorized>
-            <NotAuthorized>
-                <a href="/accountPage">Login</a>
-            </NotAuthorized>
-        </AuthorizeView>
+        <LoginLayout />
+        <a href="aboutPage" target="_blank">About</a>
     </div>
 
     <div class="content px-4">
-
-        @if (AppData.role == "Noob")
-        {
-            <p>@_name</p>
-        }
+        <p>@_name</p>
         @Body
     </div>
     <Footer />
@@ -53,7 +51,7 @@
         appData.DataFile = dataFile;
         path = AppData.definedDatabasePath;
         fileName = AppData.userDatabaseFile;
-        //await appData.CheckForFirstTimeUse();
+        await appData.CheckForFirstTimeUse();
         if (appData.CheckForFirstTimeUse().IsCompletedSuccessfully)
         {
             //users = await userData.GetUsers();
@@ -70,7 +68,7 @@
         {
             if (accounts.isRegistered(AppData.loadedUser.emailAddress))
             {
-                _name = AppData.loadedUser.userName;
+
             }
         }
     }

@@ -1,9 +1,4 @@
-﻿@inherits LayoutComponentBase
-@inject AuthenticationStateProvider AuthenticationStateProvider
-@using ESOCompanion.Data
-@using System
-
-<div class="top-row pl-4 navbar navbar-dark">
+﻿<div class="top-row pl-4 navbar navbar-dark">
     <img class="float-left" src="img/icon.png" width="32" height="32" />
     <a class="navbar-brand" href="">ESO Companion</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -20,55 +15,42 @@
         </li>
         <AuthorizeView>
             <Authorized>
-                @if (AppData.role == "Noob" || AppData.role == "Admin")
-                {
-                    <UserContent />
-                }
+                <UserContent />
+                <li>
+                    <span role="separator"></span>
+                </li>
+                <ul class="nav flex-column">
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="Identity/Account/Login/Manage">
+                            <span class="oi oi-account-login" aria-hidden="true"></span> Account
+                        </NavLink>
+                    </li>
+                </ul>
             </Authorized>
             <NotAuthorized>
 
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="Identity/Account/Login">
+                    <span class="oi oi-account-login" aria-hidden="true"></span> Login
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="Identity/Account/Register">
+                    <span class="oi oi-terminal" aria-hidden="true"></span> Register
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="settingsPage">
+                    <span class="oi oi-wrench" aria-hidden="true"></span> Settings
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="aboutPage">
+                    <span class="oi oi-question-mark" aria-hidden="true"></span> About
+                </NavLink>
+            </li>
             </NotAuthorized>
-        </AuthorizeView>
-        <li>
-            <span role="separator"></span>
-        </li>
-    </ul>
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <AuthorizeView>
-                <Authorized>
-                    @if (AppData.role == "" || AppData.role == "Admin")
-                    {
-                        <NavLink class="nav-link" href="accountPage">
-                            <span class="oi oi-account-login" aria-hidden="true"></span> Account
-                        </NavLink>
-                    }
-                </Authorized>
-                <NotAuthorized>
-
-                </NotAuthorized>
-            </AuthorizeView>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="accountPage">
-                <span class="oi oi-account-login" aria-hidden="true"></span> Login
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="accountRegisterPage">
-                <span class="oi oi-terminal" aria-hidden="true"></span> Register
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="settingsPage">
-                <span class="oi oi-wrench" aria-hidden="true"></span> Settings
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="aboutPage">
-                <span class="oi oi-question-mark" aria-hidden="true"></span> About
-            </NavLink>
-        </li>
+    </AuthorizeView>
     </ul>
 </div>
 
